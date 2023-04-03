@@ -10,13 +10,13 @@
    <children>
       <ImageView fitHeight="400.0" fitWidth="800.0" layoutY="2.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/cleanamp.png" />
+            <Image url="@/images/cleanamp.png" />
          </image>
       </ImageView>
       <Button layoutX="734.0" layoutY="2.0" mnemonicParsing="false" onAction="#switchToScene1" text="Button" />
       <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="68.0" layoutY="61.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/cleanknob.png" />
+            <Image url="@/images/cleanknob.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -24,7 +24,7 @@
       </ImageView>
       <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="182.0" layoutY="61.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/cleanknob.png" />
+            <Image url="@/images/cleanknob.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -32,7 +32,7 @@
       </ImageView>
       <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="293.0" layoutY="61.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/cleanknob.png" />
+            <Image url="@/images/cleanknob.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -40,7 +40,7 @@
       </ImageView>
       <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="406.0" layoutY="61.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/cleanknob.png" />
+            <Image url="@/images/cleanknob.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -48,7 +48,7 @@
       </ImageView>
       <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="518.0" layoutY="61.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/cleanknob.png" />
+            <Image url="@/images/cleanknob.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -56,7 +56,7 @@
       </ImageView>
       <ImageView fitHeight="100.0" fitWidth="100.0" layoutX="634.0" layoutY="61.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/cleanknob.png" />
+            <Image url="@/images/cleanknob.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />

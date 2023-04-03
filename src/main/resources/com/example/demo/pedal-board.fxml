@@ -16,23 +16,23 @@
             <Button layoutX="742.0" layoutY="2.0" mnemonicParsing="false" onAction="#switchToScene1" text="Button" />
             <ImageView fitHeight="347.0" fitWidth="238.0" layoutX="14.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/Distortion.png" />
+                  <Image url="@/images/Distortion.png" />
                </image>
             </ImageView>
             <ImageView fx:id="redLightOff" fitHeight="20.0" fitWidth="20.0" layoutX="110.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/light%20off.png" />
+                  <Image url="@/images/light off.png" />
                </image>
             </ImageView>
             <ImageView fx:id="redLightOn" fitHeight="20.0" fitWidth="20.0" layoutX="110.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true" visible="false">
                <image>
-                  <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/light%20on.png" />
+                  <Image url="@/images/light on.png" />
                </image>
             </ImageView>
             <Button layoutX="25.0" layoutY="244.0" mnemonicParsing="false" onMouseClicked="#distortOnOff" prefHeight="110.0" prefWidth="190.0" />
             <ImageView accessibleRole="BUTTON" fitHeight="38.0" fitWidth="30.0" layoutX="163.0" layoutY="83.0" onMouseReleased="#distorionSet" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/distortknob.png" />
+                  <Image url="@/images/distortknob.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -40,7 +40,7 @@
             </ImageView>
             <ImageView accessibleRole="BUTTON" fitHeight="38.0" fitWidth="30.0" layoutX="47.0" layoutY="83.0" onMouseReleased="#distorionToneSet" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/distortknob.png" />
+                  <Image url="@/images/distortknob.png" />
                </image>
                <cursor>
                   <Cursor fx:constant="HAND" />
@@ -48,7 +48,7 @@
             </ImageView>
             <ImageView fitHeight="347.0" fitWidth="211.0" layoutX="276.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../java/com/example/demo/Reverb.png" />
+                  <Image url="@/images/Reverb.png" />
                </image>
             </ImageView>
             <TextField fx:id="disToneNum" layoutX="47.0" layoutY="44.0" prefHeight="36.0" prefWidth="30.0" />
