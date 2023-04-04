@@ -11,12 +11,12 @@
    <children>
       <ImageView fx:id="amp" fitHeight="400.0" fitWidth="800.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/unnamed.png" />
+            <Image url="@/images/unnamed.png" />
          </image>
       </ImageView>
       <ImageView fx:id="knob1" accessibleRole="BUTTON" fitHeight="70.0" fitWidth="50.0" layoutX="56.0" layoutY="278.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/knob1.png" />
+            <Image url="@/images/knob1.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -24,7 +24,7 @@
       </ImageView>
       <ImageView fx:id="knob2" accessibleRole="BUTTON" fitHeight="70.0" fitWidth="50.0" layoutX="147.0" layoutY="278.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/knob1.png" />
+            <Image url="@/images/knob1.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -32,7 +32,7 @@
       </ImageView>
       <ImageView fx:id="knob3" accessibleRole="BUTTON" fitHeight="70.0" fitWidth="50.0" layoutX="238.0" layoutY="278.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/knob1.png" />
+            <Image url="@/images/knob1.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -40,7 +40,7 @@
       </ImageView>
       <ImageView fx:id="knob4" accessibleRole="BUTTON" fitHeight="70.0" fitWidth="50.0" layoutX="330.0" layoutY="278.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/knob1.png" />
+            <Image url="@/images/knob1.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -48,7 +48,7 @@
       </ImageView>
       <ImageView fx:id="knob5" accessibleRole="BUTTON" fitHeight="70.0" fitWidth="50.0" layoutX="423.0" layoutY="278.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/knob1.png" />
+            <Image url="@/images/knob1.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -56,7 +56,7 @@
       </ImageView>
       <ImageView fx:id="knob6" accessibleRole="BUTTON" fitHeight="70.0" fitWidth="50.0" layoutX="516.0" layoutY="278.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/knob1.png" />
+            <Image url="@/images/knob1.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -64,7 +64,7 @@
       </ImageView>
       <ImageView fx:id="knob7" accessibleRole="BUTTON" fitHeight="70.0" fitWidth="50.0" layoutX="615.0" layoutY="278.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/knob1.png" />
+            <Image url="@/images/knob1.png" />
          </image>
          <cursor>
             <Cursor fx:constant="HAND" />
@@ -72,12 +72,12 @@
       </ImageView>
       <ImageView fx:id="redLight" fitHeight="20.0" fitWidth="29.0" layoutX="679.0" layoutY="328.0" pickOnBounds="true">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/maxresdefault%20(1).jpg" />
+            <Image url="@/images/maxresdefault (1).jpg" />
          </image>
       </ImageView>
       <ImageView fx:id="GreenLight" fitHeight="20.0" fitWidth="29.0" layoutX="679.0" layoutY="293.0" pickOnBounds="true" visible="false">
          <image>
-            <Image url="file:/C:/Users/ZachExchange/IdeaProjects/demo/src/main/java/com/example/demo/grass-green-color-solid-background-1920x1080.png" />
+            <Image url="@/images/grass-green-color-solid-background-1920x1080.png" />
          </image>
       </ImageView>
       <Button layoutX="718.0" layoutY="280.0" mnemonicParsing="false" onMouseClicked="#TurnOn" prefHeight="80.0" prefWidth="52.0" />
