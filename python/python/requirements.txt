@@ -1,0 +1,2 @@
+pedalboard==0.7.0
+sounddevice==0.4.2
