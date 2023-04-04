@@ -1,7 +1,7 @@
 import time
 
 import pedalboard
-from pedalboard import Chorus, Reverb, Distortion, Clipping, Gain, Compressor, HighpassFilter, Convolution
+from pedalboard import Chorus, Reverb, Distortion, Clipping, Gain, Compressor, HighpassFilter, LowpassFilter, Convolution
 from pedalboard.io import AudioStream
 
 import sounddevice as sd
@@ -202,7 +202,11 @@ def add_effect(stream: AudioStream, user_input: str):
         stream.plugins.append(Gain(gain_db=-15))
         stream.plugins.append(Distortion(drive_db=15.1))
         stream.plugins.append(Gain(gain_db=-10))
-        stream.plugins.append(Convolution("/impulse-responses/distortion/OD-R112-V30-DYN-57-P10-30-BRIGHT.wav"))
+        # extra gain stage
+        stream.plugins.append(Gain(gain_db=20))
+        stream.plugins.append(LowpassFilter(cutoff_frequency_hz=6000))
+        stream.plugins.append(Gain(gain_db=-15))
+        stream.plugins.append(Convolution("impulse-responses/distortion/OD-R112-V30-DYN-57-P09-00.wav"))
     if added_effect is not None:
         stream.plugins.append(added_effect)
 
@@ -288,5 +292,5 @@ def set_output_device(device_number):
     return 0
 
 
-# start_cli()
+start_cli()
 # start()
