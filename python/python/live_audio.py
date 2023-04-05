@@ -27,11 +27,11 @@ distortion_amp = [Compressor(), Gain(gain_db=20), Clipping(threshold_db=-10), Hi
                   Gain(gain_db=20), HighpassFilter(cutoff_frequency_hz=250), Gain(gain_db=-15),
                   Distortion(drive_db=15.1), Gain(gain_db=-10), Gain(gain_db=20), LowpassFilter(cutoff_frequency_hz=6000),
                   Gain(gain_db=-15)]
-distortion_ir = Convolution("/Users/kyle/IdeaProjects/Seminar/python/impulse-responses/distortion/OD-R112-V30-DYN-57-P09-00.wav")
+distortion_ir = Convolution(os.path.dirname(__file__) + "/../impulse-responses/distortion/OD-R112-V30-DYN-57-P09-00.wav")
 
 clean_amp = [Compressor(), Gain(gain_db=-20), Clipping(threshold_db=-10), HighpassFilter(cutoff_frequency_hz=250),
              Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(35)]
-clean_ir = Convolution("/Users/kyle/IdeaProjects/Seminar/python/impulse-responses/clean/01_Twin73_dome_edge_L19.wav")
+clean_ir = Convolution(os.path.dirname(__file__) + "/../impulse-responses/clean/01_Twin73_dome_edge_L19.wav")
 
 chain_size: int = 0
 amp_start_pos: int = -1
