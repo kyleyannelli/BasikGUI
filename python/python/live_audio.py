@@ -1,7 +1,8 @@
 import time
 
 import pedalboard
-from pedalboard import Chorus, Reverb, Distortion, Clipping, Gain, Compressor, HighpassFilter, LowpassFilter, Convolution
+from pedalboard import Chorus, Reverb, Distortion, \
+    Clipping, Gain, Compressor, HighpassFilter, LowpassFilter, Convolution, Delay
 from pedalboard.io import AudioStream
 
 import sounddevice as sd
@@ -17,6 +18,8 @@ url = "http://localhost:30108"
 input_url = url + "/input"
 output_url = url + "/output"
 cli_url = url + "/cli"
+effect_url = url + "/effect"
+pedalboard_url = url + "/pedalboard"
 
 distortion_amp = [Compressor(), Gain(gain_db=20), Clipping(threshold_db=-10), HighpassFilter(cutoff_frequency_hz=250),
                   Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(gain_db=20),
@@ -46,12 +49,42 @@ def start():
     global cli_url
     with AudioStream(buffer_size=1200, input_device_name=str(set_input_device(selected_input_device)),
                      output_device_name=str(set_output_device(selected_output_device)), allow_feedback=True) as stream:
-        command_in = ""
-        set_clean_amp(stream.plugins)
-        is_dist = False
-        while is_user_continue(command_in):
-            is_dist = handle_input(stream=stream, user_input=command_in, is_dist=is_dist)
-            command_in = sync_get_data(cli_url, "null")
+        handle_api_stream(stream)
+
+
+def handle_api_stream(stream: AudioStream):
+    command_in = ""
+    set_clean_amp(stream.plugins)
+    is_dist = False
+    while is_user_continue(command_in):
+        is_dist = handle_input_through_api(stream=stream, user_input=command_in, is_dist=is_dist)
+        update_api_pedalboard(stream.plugins)
+        command_in = sync_get_data(cli_url, "null")
+
+
+def update_api_pedalboard(pedal_chain: Chain):
+    stringified_board = ""
+    i = 0
+    for pedal in pedal_chain:
+        pedal: pedalboard.Plugin = pedal
+        if (i < amp_start_pos + 1) or (amp_end_pos < i < ir_pos):
+            stringified_board += "|" + stringify_pedal(pedal)
+        i += 1
+    sync_put_data(pedalboard_url, {'new_board': stringified_board})
+
+
+def stringify_pedal(plugin: pedalboard.Plugin):
+    if type(plugin) == pedalboard.Reverb:
+        return "name:reverb," + "damping:" + str(plugin.damping) + \
+                   ",room_size:" + str(plugin.room_size) + \
+                   ",dry_level:" + str(plugin.dry_level) + \
+                   ",wet_level:" + str(plugin.wet_level)
+    elif type(plugin) == pedalboard.Chorus:
+        return "name:chorus," + "mix:" + str(plugin.mix) + \
+            ",depth:" + str(plugin.depth) + \
+            ",rate_hz:" + str(plugin.rate_hz)
+    elif type(plugin) == pedalboard.Distortion:
+        return "name:distortion," + "drive_db:" + str(plugin.drive_db)
 
 
 def sync_get_data(get_url: str, continue_case):
@@ -61,6 +94,10 @@ def sync_get_data(get_url: str, continue_case):
         current_case = s.get(get_url).text.replace("\"", "")
         current_case.replace("\\", "")
     return current_case
+
+
+def sync_put_data(put_url: str, data: dict):
+    s.put(url=put_url, params=data)
 
 
 def start_cli():
@@ -187,6 +224,97 @@ def print_plugin(plugin: pedalboard.Plugin):
         if not (15.11 > plugin.drive_db > 15.09):
             print("|Distortion|: "
                   + "Drive (db): " + str(plugin.drive_db))
+
+
+def add_pedal_through_api(pedal_chain: Chain, effect_number: int, pre_amp: bool):
+    global amp_start_pos, amp_end_pos, ir_pos, chain_size, effect_url
+    effect_info_from_api: dict = get_dict_effect_from_api()
+    preferred_pos = int(effect_info_from_api["POSITION"])
+    pedal: pedalboard.Plugin = parse_effect_from_dict(effect_number, effect_info_from_api)
+    if pre_amp and ((amp_start_pos + 1) >= preferred_pos >= 0):
+        pedal_chain.insert(preferred_pos, pedal)
+        # the entire amp is shifting over
+        amp_start_pos += 1
+        amp_end_pos += 1
+        ir_pos += 1
+    elif pre_amp:
+        pedal_chain.insert(amp_start_pos + 1, pedal)
+        # the entire amp is shifting over
+        amp_start_pos += 1
+        amp_end_pos += 1
+        ir_pos += 1
+    else:
+        # just the speaker is shifting over
+        pedal_chain.insert(ir_pos, pedal)
+        ir_pos += 1
+    chain_size += 1
+
+
+def parse_effect_from_dict(effect_number: int, parameters: dict):
+    added_effect = None
+    if effect_number == 1:
+        added_effect: pedalboard.Reverb = Reverb()
+        adjust_reverb(added_effect, parameters)
+    elif effect_number == 2:
+        added_effect: pedalboard.Distortion = Distortion()
+        adjust_distortion(added_effect, parameters)
+    elif effect_number == 3:
+        added_effect: pedalboard.Chorus = Chorus()
+        adjust_chorus(added_effect, parameters)
+    elif effect_number == 5:
+        added_effect: pedalboard.Delay = Delay()
+        adjust_delay(added_effect, parameters)
+    if added_effect is not None:
+        return added_effect
+
+
+def adjust_delay(delay_pedal: pedalboard.Delay, parameters: dict):
+    delay_pedal.mix = float(parameters["mix"])
+    delay_pedal.feedback = float(parameters["feedback"])
+    delay_pedal.delay_seconds = float(parameters["delay_seconds"])
+
+
+def adjust_chorus(chorus_pedal: pedalboard.Chorus, parameters: dict):
+    chorus_pedal.mix = float(parameters["mix"])
+    chorus_pedal.depth = float(parameters["depth"])
+    chorus_pedal.rate_hz = float(parameters["rate_hz"])
+
+
+def adjust_distortion(distortion_pedal: pedalboard.Distortion, parameters: dict):
+    distortion_pedal.drive_db = float(parameters["drive_db"])
+
+
+def adjust_reverb(reverb_pedal: pedalboard.Reverb, parameters: dict):
+    reverb_pedal.wet_level = float(parameters["mix"])
+    reverb_pedal.dry_level = 1.0 - reverb_pedal.wet_level
+    reverb_pedal.damping = float(parameters["damping"])
+    reverb_pedal.room_size = float(parameters["room_size"])
+
+
+def get_dict_effect_from_api():
+    list_data: list = sync_get_data(effect_url, "null").replace("[", "").replace("]", "").split(",")
+    dict_data: dict = {}
+    for data in list_data:
+        data_split = data.split(":")
+        dict_data[data_split[0]] = data_split[1]
+    return dict_data
+
+
+def handle_input_through_api(stream: AudioStream, user_input: str, is_dist: bool):
+    if user_input.isdigit():
+        if int(user_input) == 4:
+            if is_dist:
+                set_clean_amp(stream.plugins)
+                return False
+            else:
+                set_distortion_amp(stream.plugins)
+                return True
+        add_pedal_through_api(stream.plugins, int(user_input), True)
+    elif user_input == "r":
+        remove_effect(stream)
+    elif user_input == "a":
+        adjust_effect(stream)
+    return is_dist
 
 
 def handle_input(stream: AudioStream, user_input: str, is_dist: bool):
@@ -367,4 +495,4 @@ def set_output_device(device_number):
 
 
 # start_cli()
-start()
+# start()

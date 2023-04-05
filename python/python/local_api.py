@@ -23,7 +23,7 @@ app.selected_output = -1
 app.current_board = []
 # Start Variables For Adding an Effect (VFANE)
 app.desired_position_in_board = None
-app.parameters = []
+app.parameters = None
 # End VFANE
 
 # Fake CLI, it will be None after accessed once (via API)
@@ -34,15 +34,17 @@ app.cli_input = None
 @app.get("/effect")
 async def get_effect():
     global app
-    temp_params_with_pos = app.parameters
+    if app.desired_position_in_board is None:
+        return None
+    temp_params_with_pos = app.parameters.split(",")
     temp_params_with_pos.append("POSITION:" + str(app.desired_position_in_board))
     app.desired_position_in_board = None
-    app.parameters = []
+    app.parameters = None
     return temp_params_with_pos
 
 
 @app.patch("/effect")
-async def adjust_effect(desired_position_in_board: int = Form(...), parameters: list = Form(...)):
+async def adjust_effect(desired_position_in_board: int = Form(...), parameters: str = Form(...)):
     global app
     app.desired_position_in_board = desired_position_in_board
     app.parameters = parameters
@@ -53,7 +55,7 @@ async def adjust_effect(desired_position_in_board: int = Form(...), parameters: 
 
 @app.put("/effect")
 async def add_effect(desired_position_in_board: int = Form(...),
-                     effect_number: int = Form(...), parameters: list = Form(...)):
+                     effect_number: int = Form(...), parameters: str = Form(...)):
     global app
     app.desired_position_in_board = desired_position_in_board
     app.parameters = parameters
@@ -66,7 +68,7 @@ async def add_effect(desired_position_in_board: int = Form(...),
 async def remove_effect(effect_position_in_board: int = Form(...)):
     global app
     app.cli_input = "r"
-    app.parameters = []
+    app.parameters = None
     app.parameters.append("POSITION:" + str(effect_position_in_board))
     return "Effect removal queued..."
 
@@ -103,7 +105,7 @@ async def get_current_board():
 #   I think it is better to just replace with the current running board from basik.
 #   Otherwise, there could be some sort of mismatch.
 @app.put("/pedalboard")
-async def replace_current_board(new_board: Annotated[list, Form()]):
+async def replace_current_board(new_board: str):
     global app
     app.current_board = new_board
 
