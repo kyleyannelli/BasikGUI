@@ -1,15 +1,15 @@
 package basik.kyleyannelli.models;
 
 public class Delay extends Pedal {
-    public Delay(String name, int positionInBoard, boolean isPre, boolean isOn) {
-        super(name, positionInBoard, isPre, isOn);
+    public Delay(int positionInBoard, boolean isPre, boolean isOn) {
+        super("Delay", positionInBoard, isPre, isOn);
     }
 
-    public Delay(String name, int positionInBoard, boolean isPre) {
-        super(name, positionInBoard, isPre);
+    public Delay(int positionInBoard, boolean isPre) {
+        super("Delay", positionInBoard, isPre);
     }
 
-    public Delay(String name, int positionInBoard) {
-        super(name, positionInBoard);
+    public Delay(int positionInBoard) {
+        super("Delay", positionInBoard);
     }
 }

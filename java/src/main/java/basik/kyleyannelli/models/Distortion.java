@@ -1,15 +1,27 @@
 package basik.kyleyannelli.models;
 
 public class Distortion extends Pedal {
-    public Distortion(String name, int positionInBoard, boolean isPre, boolean isOn) {
-        super(name, positionInBoard, isPre, isOn);
+    /**
+     * gainDb: The gain in decibels.
+     */
+    private float gainDb;
+    public Distortion(int positionInBoard, boolean isPre, boolean isOn) {
+        super("Distortion", positionInBoard, isPre, isOn);
     }
 
-    public Distortion(String name, int positionInBoard, boolean isPre) {
-        super(name, positionInBoard, isPre);
+    public Distortion(int positionInBoard, boolean isPre) {
+        super("Distortion", positionInBoard, isPre);
     }
 
-    public Distortion(String name, int positionInBoard) {
-        super(name, positionInBoard);
+    public Distortion(int positionInBoard) {
+        super("Distortion", positionInBoard);
+    }
+
+    public float getGainDb() {
+        return this.gainDb;
+    }
+
+    public void setGainDb(float gainDb) {
+        this.gainDb = keepInRange(gainDb);
     }
 }
