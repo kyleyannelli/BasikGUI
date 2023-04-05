@@ -25,9 +25,10 @@ distortion_amp = [Compressor(), Gain(gain_db=20), Clipping(threshold_db=-10), Hi
                   Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(gain_db=20),
                   HighpassFilter(cutoff_frequency_hz=250), Gain(gain_db=-15), Distortion(drive_db=15.1),
                   Gain(gain_db=20), HighpassFilter(cutoff_frequency_hz=250), Gain(gain_db=-15),
-                  Distortion(drive_db=15.1), Gain(gain_db=-10), Gain(gain_db=20), LowpassFilter(cutoff_frequency_hz=6000),
-                  Gain(gain_db=-15)]
-distortion_ir = Convolution(os.path.dirname(__file__) + "/../impulse-responses/distortion/OD-R112-V30-DYN-57-P09-00.wav")
+                  Distortion(drive_db=15.1), Gain(gain_db=-10), Gain(gain_db=20),
+                  LowpassFilter(cutoff_frequency_hz=6000), Gain(gain_db=-15)]
+distortion_ir = Convolution(os.path.dirname(__file__) +
+                            "/../impulse-responses/distortion/OD-R112-V30-DYN-57-P09-00.wav")
 
 clean_amp = [Compressor(), Gain(gain_db=-20), Clipping(threshold_db=-10), HighpassFilter(cutoff_frequency_hz=250),
              Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(35)]
@@ -140,7 +141,7 @@ def remove_amp(pedal_chain: Chain):
         pedal_chain.remove(pedal_chain.__getitem__(ir_pos))
     ir_pos = -1
     chain_size -= 1
-    for pedal in pedal_chain:
+    for _ in pedal_chain:
         if i == ir_pos:
             pedal_chain.remove(pedal_chain.__getitem__(j))
             chain_size -= 1
