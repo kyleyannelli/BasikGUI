@@ -3,6 +3,7 @@ import sys
 from typing import Annotated
 
 from fastapi import FastAPI, Form
+from starlette.responses import PlainTextResponse
 
 import python.live_audio as basik
 
@@ -70,7 +71,7 @@ async def remove_effect(effect_position_in_board: int = Form(...)):
     return "Effect removal queued..."
 
 
-@app.get("/cli")
+@app.get("/cli", response_class=PlainTextResponse)
 async def get_cli():
     global app
     # since we are faking cli input, this should only be accessible once
@@ -86,6 +87,7 @@ async def get_cli():
 @app.put("/cli")
 async def set_cli(command: str = Form(...)):
     global app
+    print(command)
     app.cli_input = command
     return "Set input to \"" + app.cli_input + "\". This will be nullified after a single get request."
 

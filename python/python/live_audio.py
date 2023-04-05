@@ -9,12 +9,31 @@ import sounddevice as sd
 import os
 
 import requests
+from pedalboard_native.utils import Chain
 from requests.adapters import HTTPAdapter
 s = requests.Session()
 s.mount("http://", HTTPAdapter(max_retries=999))
 url = "http://localhost:30108"
 input_url = url + "/input"
 output_url = url + "/output"
+cli_url = url + "/cli"
+
+distortion_amp = [Compressor(), Gain(gain_db=20), Clipping(threshold_db=-10), HighpassFilter(cutoff_frequency_hz=250),
+                  Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(gain_db=20),
+                  HighpassFilter(cutoff_frequency_hz=250), Gain(gain_db=-15), Distortion(drive_db=15.1),
+                  Gain(gain_db=20), HighpassFilter(cutoff_frequency_hz=250), Gain(gain_db=-15),
+                  Distortion(drive_db=15.1), Gain(gain_db=-10), Gain(gain_db=20), LowpassFilter(cutoff_frequency_hz=6000),
+                  Gain(gain_db=-15)]
+distortion_ir = Convolution("/Users/kyle/IdeaProjects/Seminar/python/impulse-responses/distortion/OD-R112-V30-DYN-57-P09-00.wav")
+
+clean_amp = [Compressor(), Gain(gain_db=-20), Clipping(threshold_db=-10), HighpassFilter(cutoff_frequency_hz=250),
+             Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(35)]
+clean_ir = Convolution("/Users/kyle/IdeaProjects/Seminar/python/impulse-responses/clean/01_Twin73_dome_edge_L19.wav")
+
+chain_size: int = 0
+amp_start_pos: int = -1
+amp_end_pos: int = -1
+ir_pos: int = -1
 
 
 def start():
@@ -24,9 +43,15 @@ def start():
     global output_url
     selected_output_device: int = sync_get_data(output_url, -1)
 
+    global cli_url
     with AudioStream(buffer_size=1200, input_device_name=str(set_input_device(selected_input_device)),
                      output_device_name=str(set_output_device(selected_output_device)), allow_feedback=True) as stream:
-        input("hey")
+        command_in = ""
+        set_clean_amp(stream.plugins)
+        is_dist = False
+        while is_user_continue(command_in):
+            is_dist = handle_input(stream=stream, user_input=command_in, is_dist=is_dist)
+            command_in = sync_get_data(cli_url, "null")
 
 
 def sync_get_data(get_url: str, continue_case):
@@ -34,6 +59,7 @@ def sync_get_data(get_url: str, continue_case):
     while str(continue_case) == str(current_case):
         time.sleep(0.2)
         current_case = s.get(get_url).text.replace("\"", "")
+        current_case.replace("\\", "")
     return current_case
 
 
@@ -51,6 +77,7 @@ def start_cli():
         # stream.running.
         user_in = ""
         # start on clean channel
+        set_clean_amp(stream.plugins)
         is_dist = False
         while is_user_continue(user_in):
             is_dist = handle_input(stream=stream, user_input=user_in, is_dist=is_dist)
@@ -65,6 +92,58 @@ def start_cli():
                             "Enter q to quit.\n")
 
 
+def remove_amp(pedal_chain: Chain):
+    global amp_start_pos, amp_end_pos, ir_pos, chain_size
+    # keep track of total original
+    i = 0
+    # keep track of current position (since chain is changing size)
+    j = 0
+    # remove the ir before the loop as we won't know its position after
+    if ir_pos >= 0:
+        pedal_chain.remove(pedal_chain.__getitem__(ir_pos))
+    ir_pos = -1
+    chain_size -= 1
+    for pedal in pedal_chain:
+        if i == ir_pos:
+            pedal_chain.remove(pedal_chain.__getitem__(j))
+            chain_size -= 1
+            j -= 1
+        if amp_start_pos <= i <= amp_end_pos:
+            pedal_chain.remove(pedal_chain.__getitem__(j))
+            chain_size -= 1
+            j -= 1
+        if i > amp_end_pos:
+            break
+        i += 1
+        j += 1
+    amp_start_pos = -1
+    amp_end_pos = -1
+
+
+def set_clean_amp(pedal_chain: Chain):
+    global clean_amp, clean_ir
+    set_amp(pedal_chain, clean_amp, clean_ir)
+
+
+def set_distortion_amp(pedal_chain: Chain):
+    global distortion_amp, distortion_ir
+    set_amp(pedal_chain, distortion_amp, distortion_ir)
+
+
+def set_amp(pedal_chain: Chain, amp_chain: list, amp_ir: Convolution):
+    global amp_start_pos, amp_end_pos, ir_pos, \
+        chain_size
+    remove_amp(pedal_chain)
+    amp_start_pos = chain_size
+    for pedal in amp_chain:
+        pedal_chain.append(pedal)
+        chain_size += 1
+    amp_end_pos = chain_size
+    pedal_chain.append(amp_ir)
+    chain_size += 1
+    ir_pos = chain_size
+
+
 def print_board(stream: AudioStream, dist: bool):
     if dist:
         print("\n***Current Board | DISTORTION CHANNEL***")
@@ -72,7 +151,7 @@ def print_board(stream: AudioStream, dist: bool):
         print("\n***Current Board | CLEAN CHANNEL***")
     i = 0
     for plugin in stream.plugins:
-        if is_recognized_plugin(plugin):
+        if not(amp_start_pos <= i <= amp_end_pos) and i != ir_pos:
             print("[" + str(i) + "]", end=" ")
             print_plugin(plugin)
         i += 1
@@ -112,12 +191,14 @@ def print_plugin(plugin: pedalboard.Plugin):
 
 def handle_input(stream: AudioStream, user_input: str, is_dist: bool):
     if user_input.isdigit():
-        add_effect(stream, user_input)
         if int(user_input) == 4:
             if is_dist:
+                set_clean_amp(stream.plugins)
                 return False
             else:
+                set_distortion_amp(stream.plugins)
                 return True
+        add_effect(stream, user_input)
     elif user_input == "r":
         remove_effect(stream)
     elif user_input == "a":
@@ -174,6 +255,21 @@ def adjust_plugin(plugin: pedalboard.Plugin):
             plugin.drive_db = float(drive_db)
 
 
+def add_pedal(pedal_chain: Chain, pedal: pedalboard.Plugin, pre_amp: bool):
+    global amp_start_pos, amp_end_pos, ir_pos, chain_size
+    if pre_amp:
+        pedal_chain.insert(amp_start_pos + 1, pedal)
+        # the entire amp is shifting over
+        amp_start_pos += 1
+        amp_end_pos += 1
+        ir_pos += 1
+    else:
+        # just the speaker is shifting over
+        pedal_chain.insert(ir_pos, pedal)
+        ir_pos += 1
+    chain_size += 1
+
+
 def add_effect(stream: AudioStream, user_input: str):
     added_effect = None
     # add reverb
@@ -185,30 +281,8 @@ def add_effect(stream: AudioStream, user_input: str):
         added_effect = Chorus()
     elif int(user_input) == 4:
         added_effect = None
-        # start here
-        stream.plugins.append(Compressor())
-        stream.plugins.append(Gain(gain_db=20))
-        stream.plugins.append(Clipping(threshold_db=-10))
-        stream.plugins.append(HighpassFilter(cutoff_frequency_hz=250))
-        stream.plugins.append(Gain(gain_db=-15))
-        stream.plugins.append(Distortion(drive_db=15.1))
-        # end here ^ for just crunch
-        stream.plugins.append(Gain(gain_db=20))
-        stream.plugins.append(HighpassFilter(cutoff_frequency_hz=250))
-        stream.plugins.append(Gain(gain_db=-15))
-        stream.plugins.append(Distortion(drive_db=15.1))
-        stream.plugins.append(Gain(gain_db=20))
-        stream.plugins.append(HighpassFilter(cutoff_frequency_hz=250))
-        stream.plugins.append(Gain(gain_db=-15))
-        stream.plugins.append(Distortion(drive_db=15.1))
-        stream.plugins.append(Gain(gain_db=-10))
-        # extra gain stage
-        stream.plugins.append(Gain(gain_db=20))
-        stream.plugins.append(LowpassFilter(cutoff_frequency_hz=6000))
-        stream.plugins.append(Gain(gain_db=-15))
-        stream.plugins.append(Convolution("impulse-responses/distortion/OD-R112-V30-DYN-57-P09-00.wav"))
     if added_effect is not None:
-        stream.plugins.append(added_effect)
+        add_pedal(stream.plugins, added_effect, False)
 
 
 def remove_effect(stream: AudioStream):
@@ -292,5 +366,5 @@ def set_output_device(device_number):
     return 0
 
 
-start_cli()
-# start()
+# start_cli()
+start()

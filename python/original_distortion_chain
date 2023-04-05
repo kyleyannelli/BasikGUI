@@ -1,0 +1,23 @@
+# pedalboard stuff
+# start here
+# stream.plugins.append(Compressor())
+# stream.plugins.append(Gain(gain_db=20))
+# stream.plugins.append(Clipping(threshold_db=-10))
+# stream.plugins.append(HighpassFilter(cutoff_frequency_hz=250))
+# stream.plugins.append(Gain(gain_db=-15))
+# stream.plugins.append(Distortion(drive_db=15.1))
+# # end here ^ for just crunch
+# stream.plugins.append(Gain(gain_db=20))
+# stream.plugins.append(HighpassFilter(cutoff_frequency_hz=250))
+# stream.plugins.append(Gain(gain_db=-15))
+# stream.plugins.append(Distortion(drive_db=15.1))
+# stream.plugins.append(Gain(gain_db=20))
+# stream.plugins.append(HighpassFilter(cutoff_frequency_hz=250))
+# stream.plugins.append(Gain(gain_db=-15))
+# stream.plugins.append(Distortion(drive_db=15.1))
+# stream.plugins.append(Gain(gain_db=-10))
+# # extra gain stage
+# stream.plugins.append(Gain(gain_db=20))
+# stream.plugins.append(LowpassFilter(cutoff_frequency_hz=6000))
+# stream.plugins.append(Gain(gain_db=-15))
+# stream.plugins.append(Convolution("impulse-responses/distortion/OD-R112-V30-DYN-57-P09-00.wav"))
