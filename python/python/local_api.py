@@ -1,6 +1,4 @@
 import os
-import sys
-from typing import Annotated
 
 from fastapi import FastAPI, Form
 from starlette.responses import PlainTextResponse
@@ -47,7 +45,7 @@ async def get_effect():
 async def adjust_effect(desired_position_in_board: int = Form(...),
                         current_position_in_board: int = Form(...), parameters: str = Form(...)):
     global app
-    app.desired_position_in_board = str(desired_position_in_board) + "/" + str(current_position_in_board)
+    app.desired_position_in_board = str(current_position_in_board) + "/" + str(desired_position_in_board)
     app.parameters = parameters
     # essentially tell the interface we want to adjust an effect
     app.cli_input = "a"
@@ -69,7 +67,7 @@ async def add_effect(desired_position_in_board: int = Form(...),
 async def remove_effect(effect_position_in_board: int = Form(...)):
     global app
     app.cli_input = "r"
-    app.parameters = None
+    app.parameters = []
     app.parameters.append("POSITION:" + str(effect_position_in_board))
     return "Effect removal queued..."
 
