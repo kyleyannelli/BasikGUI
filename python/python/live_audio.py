@@ -68,7 +68,7 @@ def update_api_pedalboard(pedal_chain: Chain):
     i = 0
     for pedal in pedal_chain:
         pedal: pedalboard.Plugin = pedal
-        if (i < amp_start_pos + 1) or (amp_end_pos < i < ir_pos):
+        if (i < amp_start_pos) or (amp_end_pos < i < ir_pos):
             stringified_board += "|" + stringify_pedal(pedal)
         i += 1
     sync_put_data(pedalboard_url, {'new_board': stringified_board})
@@ -86,6 +86,8 @@ def stringify_pedal(plugin: pedalboard.Plugin):
             ",rate_hz:" + str(plugin.rate_hz)
     elif type(plugin) == pedalboard.Distortion:
         return "name:distortion," + "drive_db:" + str(plugin.drive_db)
+    else:
+        return str(plugin)
 
 
 def sync_get_data(get_url: str, continue_case):
@@ -132,30 +134,19 @@ def start_cli():
 
 def remove_amp(pedal_chain: Chain):
     global amp_start_pos, amp_end_pos, ir_pos, chain_size
-    # keep track of total original
-    i = 0
-    # keep track of current position (since chain is changing size)
-    j = 0
     # remove the ir before the loop as we won't know its position after
     if ir_pos >= 0:
         pedal_chain.remove(pedal_chain.__getitem__(ir_pos))
-    ir_pos = -1
-    chain_size -= 1
-    for _ in pedal_chain:
-        if i == ir_pos:
-            pedal_chain.remove(pedal_chain.__getitem__(j))
+        ir_pos = -1
+        chain_size -= 1
+    if amp_start_pos != -1:
+        x = amp_end_pos
+        while x >= amp_start_pos:
+            pedal_chain.remove(pedal_chain.__getitem__(x))
             chain_size -= 1
-            j -= 1
-        if amp_start_pos <= i <= amp_end_pos:
-            pedal_chain.remove(pedal_chain.__getitem__(j))
-            chain_size -= 1
-            j -= 1
-        if i > amp_end_pos:
-            break
-        i += 1
-        j += 1
-    amp_start_pos = -1
-    amp_end_pos = -1
+            x -= 1
+        amp_start_pos = -1
+        amp_end_pos = -1
 
 
 def set_clean_amp(pedal_chain: Chain):
@@ -172,14 +163,17 @@ def set_amp(pedal_chain: Chain, amp_chain: list, amp_ir: Convolution):
     global amp_start_pos, amp_end_pos, ir_pos, \
         chain_size
     remove_amp(pedal_chain)
-    amp_start_pos = chain_size
+    if chain_size > 0:
+        amp_start_pos = chain_size - 1
+    else:
+        amp_start_pos = 0
     for pedal in amp_chain:
         pedal_chain.append(pedal)
         chain_size += 1
-    amp_end_pos = chain_size
+    amp_end_pos = chain_size - 1
     pedal_chain.append(amp_ir)
     chain_size += 1
-    ir_pos = chain_size
+    ir_pos = chain_size - 1
 
 
 def print_board(stream: AudioStream, dist: bool):
@@ -496,4 +490,4 @@ def set_output_device(device_number):
 
 
 # start_cli()
-# start()
+start()
