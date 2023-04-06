@@ -44,9 +44,10 @@ async def get_effect():
 
 
 @app.patch("/effect")
-async def adjust_effect(desired_position_in_board: int = Form(...), parameters: str = Form(...)):
+async def adjust_effect(desired_position_in_board: int = Form(...),
+                        current_position_in_board: int = Form(...), parameters: str = Form(...)):
     global app
-    app.desired_position_in_board = desired_position_in_board
+    app.desired_position_in_board = str(desired_position_in_board) + "/" + str(current_position_in_board)
     app.parameters = parameters
     # essentially tell the interface we want to adjust an effect
     app.cli_input = "a"
