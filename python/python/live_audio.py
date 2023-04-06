@@ -286,7 +286,7 @@ def handle_input_through_api(stream: AudioStream, user_input: str, is_dist: bool
     elif user_input == "r":
         remove_effect(stream)
     elif user_input == "a":
-        adjust_effect_through_api(stream)
+        adjust_effect_through_api(stream.plugins)
     return is_dist
 
 
