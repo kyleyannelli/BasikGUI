@@ -63,11 +63,11 @@ public abstract class Pedal {
      * @return
      */
     public float keepInRange(float parameter) {
-        if(parameter < 1.0001F && parameter > 0.0F) {
+        if(parameter < 9.9999F && parameter > 0.0F) {
             return parameter;
         }
         // equal to with float... unlikely
-        else if(parameter >= 1.0001F) {
+        else if(parameter >= 9.9999F) {
             return 1.0F;
         }
         else {

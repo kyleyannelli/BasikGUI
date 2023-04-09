@@ -9,7 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class APIPreloader extends Preloader {
+public class BasikAPIPreloader extends Preloader {
     ProgressBar bar;
     Stage stage;
 
@@ -22,18 +22,13 @@ public class APIPreloader extends Preloader {
         vBox.setAlignment(Pos.CENTER);
         vBox.getChildren().addAll(bar, label);
         p.setCenter(vBox);
-        return new Scene(p, 400, 250);
+        return new Scene(p, 600, 413);
     }
 
     public void start(Stage stage) {
         this.stage = stage;
         stage.setScene(createPreloaderScene());
         stage.show();
-    }
-
-    @Override
-    public void handleProgressNotification(ProgressNotification pn) {
-        bar.setProgress(pn.getProgress());
     }
 
     @Override
