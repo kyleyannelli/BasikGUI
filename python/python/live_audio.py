@@ -464,4 +464,4 @@ def set_output_device(device_number):
     return 0
 
 
-start()
+# start()
