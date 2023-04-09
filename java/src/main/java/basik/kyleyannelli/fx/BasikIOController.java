@@ -1,7 +1,5 @@
 package basik.kyleyannelli.fx;
 
-import com.google.api.client.http.HttpMediaType;
-import com.google.api.client.http.MultipartContent;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -9,32 +7,43 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
 import org.apache.http.HttpEntity;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 public class BasikIOController {
     private boolean isShowing = false;
     @FXML
-    public void initialize() {
+    private ComboBox inputDeviceCombo;
+    @FXML
+    private ComboBox outputDeviceCombo;
+
+    @FXML
+    public void initialize() throws IOException {
+        List<String> currentList = getAPIRequest("http://localhost:30108/inputs");
+        String selectedNumberString = getAPIRequest("http://localhost:30108/input").get(0).replaceAll("[^-?0-9]", "");
+        int selectedInteger = Integer.parseInt(selectedNumberString);
+        if(selectedInteger >= 0) {
+            inputDeviceCombo.setValue(currentList.get(selectedInteger));
+        }
+
+        currentList = getAPIRequest("http://localhost:30108/outputs");
+        selectedNumberString = getAPIRequest("http://localhost:30108/output").get(0).replaceAll("[^-?0-9]", "");
+        selectedInteger = Integer.parseInt(selectedNumberString);
+        if(selectedInteger >= 0) {
+            outputDeviceCombo.setValue(currentList.get(selectedInteger));
+        }
     }
 
     @FXML

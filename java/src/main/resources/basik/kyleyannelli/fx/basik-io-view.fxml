@@ -8,20 +8,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basik.kyleyannelli.fx.BasikIOController">
    <center>
       <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="146.0" prefWidth="310.0" BorderPane.alignment="CENTER">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Input Device" />
-            <ComboBox onAction="#onInputComboBoxSelection" onShown="#onInputComboBoxShown" prefHeight="26.0" prefWidth="309.0" />
+            <ComboBox fx:id="inputDeviceCombo" onAction="#onInputComboBoxSelection" onShown="#onInputComboBoxShown" prefHeight="26.0" prefWidth="309.0" />
             <Separator prefHeight="24.0" prefWidth="310.0">
                <VBox.margin>
                   <Insets top="5.0" />
                </VBox.margin>
             </Separator>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Output Device" />
-            <ComboBox onAction="#onOutputComboBoxSelection" onShown="#onOutputComboBoxShown" prefHeight="26.0" prefWidth="321.0" />
+            <ComboBox fx:id="outputDeviceCombo" onAction="#onOutputComboBoxSelection" onShown="#onOutputComboBoxShown" prefHeight="26.0" prefWidth="321.0" />
          </children>
       </VBox>
    </center>
