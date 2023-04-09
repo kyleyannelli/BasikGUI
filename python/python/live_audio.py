@@ -2,7 +2,7 @@ import time
 
 import pedalboard
 from pedalboard import Chorus, Reverb, Distortion, \
-    Clipping, Gain, Compressor, HighpassFilter, LowpassFilter, Convolution, Delay
+    Clipping, Gain, Compressor, HighpassFilter, Convolution, Delay
 from pedalboard.io import AudioStream
 
 import sounddevice as sd
@@ -21,17 +21,15 @@ cli_url = url + "/cli"
 effect_url = url + "/effect"
 pedalboard_url = url + "/pedalboard"
 
-distortion_amp = [Compressor(ratio=2), Gain(gain_db=20), Clipping(threshold_db=-10), HighpassFilter(cutoff_frequency_hz=250),
-                  Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(gain_db=20),
-                  HighpassFilter(cutoff_frequency_hz=250), Gain(gain_db=-15), Distortion(drive_db=15.1),
-                  Gain(gain_db=20), HighpassFilter(cutoff_frequency_hz=250), Gain(gain_db=-15),
-                  Distortion(drive_db=15.1), Gain(gain_db=-10), Gain(gain_db=20),
-                  LowpassFilter(cutoff_frequency_hz=6000), Gain(gain_db=-15)]
+distortion_amp = [Compressor(ratio=1000), Gain(gain_db=20), Clipping(threshold_db=-10), HighpassFilter(cutoff_frequency_hz=250),
+                  Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(gain_db=20), Gain(gain_db=-15), Distortion(drive_db=15.1),
+                  Gain(gain_db=20), Gain(gain_db=-15),
+                  Distortion(drive_db=15.1), Gain(gain_db=-10), Gain(gain_db=20), Gain(gain_db=-15)]
 distortion_ir = Convolution(os.path.dirname(__file__) +
                             "/../impulse-responses/distortion/OD-R112-V30-DYN-57-P09-00.wav")
 
-clean_amp = [Compressor(), Gain(gain_db=-20), Clipping(threshold_db=-10), HighpassFilter(cutoff_frequency_hz=250),
-             Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(35)]
+clean_amp = [Compressor(), Gain(gain_db=-20), Clipping(threshold_db=-10),
+             HighpassFilter(cutoff_frequency_hz=250), Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(35)]
 clean_ir = Convolution(os.path.dirname(__file__) + "/../impulse-responses/clean/01_Twin73_dome_edge_L19.wav")
 
 chain_size: int = 0
@@ -48,7 +46,7 @@ def start():
     selected_output_device: int = sync_get_data(output_url, -1)
 
     global cli_url
-    with AudioStream(buffer_size=1200, input_device_name=str(set_input_device(selected_input_device)),
+    with AudioStream(buffer_size=4096, input_device_name=str(set_input_device(selected_input_device)),
                      output_device_name=str(set_output_device(selected_output_device)), allow_feedback=True) as stream:
         handle_api_stream(stream)
 
@@ -81,9 +79,9 @@ def update_api_pedalboard(pedal_chain: Chain):
 def stringify_pedal(plugin: pedalboard.Plugin, position: int):
     if type(plugin) == pedalboard.Reverb:
         return "name:reverb,position:" + str(position) + "damping:" + str(plugin.damping) + \
-                   ",room_size:" + str(plugin.room_size) + \
-                   ",dry_level:" + str(plugin.dry_level) + \
-                   ",wet_level:" + str(plugin.wet_level)
+            ",room_size:" + str(plugin.room_size) + \
+            ",dry_level:" + str(plugin.dry_level) + \
+            ",wet_level:" + str(plugin.wet_level)
     elif type(plugin) == pedalboard.Chorus:
         return "name:chorus,position:" + str(position) + "mix:" + str(plugin.mix) + \
             ",depth:" + str(plugin.depth) + \
@@ -284,18 +282,34 @@ def handle_input_through_api(stream: AudioStream, user_input: str, is_dist: bool
                 return True
         add_pedal_through_api(stream.plugins, int(user_input), True)
     elif user_input == "r":
-        remove_effect(stream)
+        remove_effect_through_api(stream.plugins)
     elif user_input == "a":
         adjust_effect_through_api(stream.plugins)
     return is_dist
+
+
+def remove_effect_through_api(pedal_chain: Chain):
+    global amp_start_pos, amp_end_pos, ir_pos, chain_size
+    effect_info_from_api: dict = get_dict_effect_from_api()
+    position: int = int(effect_info_from_api["POSITION"])
+    if not(is_position_legal(position)):
+        return
+    pedal_chain.remove(pedal_chain.__getitem__(position))
+    if is_pre(position):
+        amp_start_pos -= 1
+        amp_end_pos -= 1
+        chain_size -= 1
+        ir_pos -= 1
+    else:
+        ir_pos -= 1
 
 
 def adjust_effect_through_api(pedal_chain: Chain):
     global amp_start_pos, amp_end_pos
     effect_info_from_api: dict = get_dict_effect_from_api()
     positions: list = effect_info_from_api["POSITION"].split("/")
-    preferred_pos = int(positions[0])
-    current_pos = int(positions[1])
+    current_pos = int(positions[0])
+    preferred_pos = int(positions[1])
     # make sure the position is an available position. not in the middle of the amp and so on.
     if current_pos >= chain_size or \
             preferred_pos >= chain_size or \
@@ -316,10 +330,11 @@ def adjust_effect_through_api(pedal_chain: Chain):
     if adjusted_pedal is None:
         return
 
-    pedal_chain.insert(preferred_pos, adjusted_pedal)
     if preferred_pos <= current_pos:
+        pedal_chain.insert(preferred_pos, adjusted_pedal)
         pedal_chain.remove(pedal_chain.__getitem__(current_pos + 1))
     else:
+        pedal_chain.insert(preferred_pos + 1, adjusted_pedal)
         pedal_chain.remove(pedal_chain.__getitem__(current_pos))
 
     # if the original position was pre-amp, and now it is post, move amp positions back one step
@@ -449,4 +464,4 @@ def set_output_device(device_number):
     return 0
 
 
-# start()
+start()
