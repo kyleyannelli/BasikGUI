@@ -5,6 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class BasikGUIController {
     private final double maxKnobRotate = 140;
@@ -40,6 +43,12 @@ public class BasikGUIController {
     @FXML
     void handleMouseMoved(MouseEvent event) {
         rotateKnobBasedOnMouse((ImageView) event.getTarget(), event);
+    }
+
+    @FXML
+    void onOpenIOMenu(ActionEvent event) throws IOException {
+        BasikIOGUI basikIOGUI = new BasikIOGUI();
+        basikIOGUI.start(new Stage());
     }
 
     private void rotateKnobBasedOnMouse(ImageView imageView, MouseEvent event) {
