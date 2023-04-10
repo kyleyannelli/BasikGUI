@@ -6,6 +6,7 @@ Amp &amp; Pedalboard Sim using Python &amp; Java.
 ### Java
 - [Maven](https://maven.apache.org/)
 - [JavaFX/OpenJFK](https://openjfx.io/)
+- [JMetro](https://github.com/JFXtras/jfxtras-styles)
 # Getting Started
 ### Prerequisites
 - Python 3.10+
