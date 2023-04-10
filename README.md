@@ -6,3 +6,10 @@ Amp &amp; Pedalboard Sim using Python &amp; Java.
 ### Java
 - [Maven](https://maven.apache.org/)
 - [JavaFX/OpenJFK](https://openjfx.io/)
+# Getting Started
+### Prerequisites
+- Python 3.10+
+- Maven
+- Java 19
+#### Install Python requirements with `pip3 install -r python/requirements.txt`
+#### Run with ./start_all.sh
