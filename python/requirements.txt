@@ -1,0 +1,6 @@
+numpy==1.15.1
+requests==2.28.2
+fastapi==0.95.0
+pedalboard==0.7.2
+sounddevice==0.4.6
+starlette==0.26.1
