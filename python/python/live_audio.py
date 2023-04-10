@@ -78,18 +78,18 @@ def update_api_pedalboard(pedal_chain: Chain):
 
 def stringify_pedal(plugin: pedalboard.Plugin, position: int):
     if type(plugin) == pedalboard.Reverb:
-        return "name:reverb,position:" + str(position) + "damping:" + str(plugin.damping) + \
+        return "name:reverb,position:" + str(position) + ",damping:" + str(plugin.damping) + \
             ",room_size:" + str(plugin.room_size) + \
             ",dry_level:" + str(plugin.dry_level) + \
             ",wet_level:" + str(plugin.wet_level)
     elif type(plugin) == pedalboard.Chorus:
-        return "name:chorus,position:" + str(position) + "mix:" + str(plugin.mix) + \
+        return "name:chorus,position:" + str(position) + ",mix:" + str(plugin.mix) + \
             ",depth:" + str(plugin.depth) + \
             ",rate_hz:" + str(plugin.rate_hz)
     elif type(plugin) == pedalboard.Distortion:
-        return "name:distortion,position:" + str(position) + "drive_db:" + str(plugin.drive_db)
+        return "name:distortion,position:" + str(position) + ",drive_db:" + str(plugin.drive_db)
     elif type(plugin) == pedalboard.Delay:
-        return "name:delay,position:" + str(position) + "mix:" + str(plugin.mix) + \
+        return "name:delay,position:" + str(position) + ",mix:" + str(plugin.mix) + \
             ",feedback:" + str(plugin.feedback) + \
             ",delay_seconds:" + str(plugin.delay_seconds)
     else:
@@ -302,6 +302,7 @@ def remove_effect_through_api(pedal_chain: Chain):
         ir_pos -= 1
     else:
         ir_pos -= 1
+        chain_size -= 1
 
 
 def adjust_effect_through_api(pedal_chain: Chain):
