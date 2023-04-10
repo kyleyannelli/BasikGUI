@@ -5,13 +5,14 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basik.kyleyannelli.fx.BasikGUIController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #8A8A8A;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basik.kyleyannelli.fx.BasikGUIController">
    <children>
       <MenuBar>
         <menus>
@@ -22,7 +23,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Settings">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#onOpenIOMenu" text="I/O" />
+              <MenuItem mnemonicParsing="false" text="I/O" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
@@ -36,12 +37,14 @@
          <bottom>
             <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="54.0" prefWidth="600.0">
               <buttons>
-                <Button alignment="CENTER" minWidth="53.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="77.0" text="Standby" translateX="-20.0" />
+                  <Button fx:id="openPedalsButton" mnemonicParsing="false" text="Open Pedals" translateX="-15.0" />
+                  <ToggleButton fx:id="distChannelButton" mnemonicParsing="false" text="Distortion Channel" translateX="-15.0" />
+                  <ToggleButton layoutX="540.0" layoutY="25.0" mnemonicParsing="false" onAction="#onStandby" text="Standby" translateX="-15.0" />
               </buttons>
             </ButtonBar>
          </bottom>
          <center>
-            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onMouseDragEntered="#handleDragEnter" onMouseDragged="#handleMouseMoved" prefHeight="226.0" prefWidth="521.0" BorderPane.alignment="CENTER">
+            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" onMouseDragEntered="#handleDragEnter" onMouseDragged="#handleMouseMoved" prefHeight="226.0" prefWidth="521.0" BorderPane.alignment="CENTER">
                <children>
                   <ImageView fx:id="cleanAmpImage" fitHeight="222.0" fitWidth="507.0" pickOnBounds="true" preserveRatio="true">
                      <image>

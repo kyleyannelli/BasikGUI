@@ -2,7 +2,9 @@ package basik.kyleyannelli.fx;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -13,6 +15,11 @@ public class BasikGUIController {
     private final double maxKnobRotate = 140;
     private final double minKnobRotate = -140;
     private double startingMouseY;
+    private boolean  isStandby = false;
+    @FXML
+    private ToggleButton distChannelButton;
+    @FXML
+    private Button openPedalsButton;
     @FXML
     private MenuItem menuQuitItem;
 
@@ -49,6 +56,17 @@ public class BasikGUIController {
     void onOpenIOMenu(ActionEvent event) throws IOException {
         BasikIOGUI basikIOGUI = new BasikIOGUI();
         basikIOGUI.start(new Stage());
+    }
+
+    @FXML
+    public void onStandby(ActionEvent event) {
+        if((isStandby = !isStandby)) {
+            distChannelButton.setDisable(true);
+            openPedalsButton.setDisable(true);
+        } else {
+            distChannelButton.setDisable(false);
+            openPedalsButton.setDisable(false);
+        }
     }
 
     private void rotateKnobBasedOnMouse(ImageView imageView, MouseEvent event) {

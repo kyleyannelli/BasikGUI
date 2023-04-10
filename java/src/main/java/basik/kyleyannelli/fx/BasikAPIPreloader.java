@@ -5,9 +5,15 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import jfxtras.styles.jmetro.JMetro;
+import jfxtras.styles.jmetro.JMetroStyleClass;
+import jfxtras.styles.jmetro.Style;
 
 public class BasikAPIPreloader extends Preloader {
     ProgressBar bar;
@@ -20,9 +26,13 @@ public class BasikAPIPreloader extends Preloader {
         BorderPane p = new BorderPane();
         VBox vBox = new VBox();
         vBox.setAlignment(Pos.CENTER);
+        vBox.setSpacing(4);
         vBox.getChildren().addAll(bar, label);
         p.setCenter(vBox);
-        return new Scene(p, 600, 413);
+        p.setBackground(new Background(new BackgroundFill(Color.valueOf("#454545"), null, null)));
+        Scene scene = new Scene(p, 250, 100);
+        JMetro jMetro = new JMetro(scene, Style.DARK);
+        return scene;
     }
 
     public void start(Stage stage) {
