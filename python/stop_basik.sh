@@ -11,7 +11,7 @@ curl -X PUT http://localhost:30108/cli -F command="q" 2>/dev/null
 
 echo "${BLUE}Basik${REG} has stopped..."
 
-sleep 1
+sleep 2
 
 curl -X DELETE http://localhost:30108/stop-api 2>/dev/null
 
