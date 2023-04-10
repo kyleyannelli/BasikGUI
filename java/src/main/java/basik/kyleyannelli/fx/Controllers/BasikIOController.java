@@ -1,4 +1,4 @@
-package basik.kyleyannelli.fx;
+package basik.kyleyannelli.fx.Controllers;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;

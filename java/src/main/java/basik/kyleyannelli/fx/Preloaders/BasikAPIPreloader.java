@@ -1,4 +1,4 @@
-package basik.kyleyannelli.fx;
+package basik.kyleyannelli.fx.Preloaders;
 
 import javafx.application.Preloader;
 import javafx.geometry.Pos;
