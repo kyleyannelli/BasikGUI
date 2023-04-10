@@ -1,4 +1,4 @@
-package basik.kyleyannelli.models;
+package basik.kyleyannelli.Models;
 
 public class NoiseGate extends Pedal {
     public NoiseGate(int positionInBoard, boolean isPre, boolean isOn) {

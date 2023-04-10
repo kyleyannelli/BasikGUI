@@ -1,6 +1,7 @@
 package basik.kyleyannelli.fx.Controllers;
 
 import basik.kyleyannelli.fx.BasikIOGUI;
+import basik.kyleyannelli.fx.BasikPedalsGUI;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -54,9 +55,15 @@ public class BasikGUIController {
     }
 
     @FXML
-    void onOpenIOMenu(ActionEvent event) throws IOException {
+    void openIOMenu(ActionEvent event) throws IOException {
         BasikIOGUI basikIOGUI = new BasikIOGUI();
         basikIOGUI.start(new Stage());
+    }
+
+    @FXML
+    public void openPedalsButton(ActionEvent event) throws IOException {
+        BasikPedalsGUI basikPedalsGUI = new BasikPedalsGUI();
+        basikPedalsGUI.start(new Stage());
     }
 
     @FXML

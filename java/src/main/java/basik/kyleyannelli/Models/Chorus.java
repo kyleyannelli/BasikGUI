@@ -1,4 +1,4 @@
-package basik.kyleyannelli.models;
+package basik.kyleyannelli.Models;
 
 public class Chorus extends Pedal {
     /**

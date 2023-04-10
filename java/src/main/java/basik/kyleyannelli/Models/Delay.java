@@ -1,4 +1,4 @@
-package basik.kyleyannelli.models;
+package basik.kyleyannelli.Models;
 
 public class Delay extends Pedal {
     public Delay(int positionInBoard, boolean isPre, boolean isOn) {

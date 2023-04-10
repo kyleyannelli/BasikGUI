@@ -1,4 +1,4 @@
-package basik.kyleyannelli.models;
+package basik.kyleyannelli.Models;
 
 public abstract class Amp {
     private final String name;

@@ -1,5 +1,6 @@
 package basik.kyleyannelli.fx.Controllers;
 
+import basik.kyleyannelli.Helpers.PedalLoader;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -102,18 +103,7 @@ public class BasikIOController {
     }
 
     private List<String> getAPIRequest(String urlString) throws IOException {
-        URL url = new URL(urlString);
-        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-        connection.setRequestMethod("GET");
-        connection.connect();
-        BufferedReader inputStream = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-        String inputLine;
-        StringBuffer bufferIn = new StringBuffer();
-        while((inputLine = inputStream.readLine()) != null) {
-            bufferIn.append(inputLine);
-        }
-        inputStream.close();
-        String stringyBuffer = bufferIn.toString();
+        String stringyBuffer = PedalLoader.basicGetReq(urlString);
         return Arrays.stream(stringyBuffer.replace("\"",  "")
                 .replace("\\", "")
                 .replace("[", "")
