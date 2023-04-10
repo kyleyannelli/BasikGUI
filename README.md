@@ -12,4 +12,4 @@ Amp &amp; Pedalboard Sim using Python &amp; Java.
 - Maven
 - Java 19
 #### Install Python requirements with `pip3 install -r python/requirements.txt`
-#### Run with ./start_all.sh
+#### Run with `./start_all.sh`
