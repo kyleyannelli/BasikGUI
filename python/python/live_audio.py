@@ -328,9 +328,9 @@ def adjust_effect_through_api(pedal_chain: Chain):
     if type(pedal) == pedalboard.Reverb:
         adjusted_pedal = parse_effect_from_dict(1, effect_info_from_api)
     elif type(pedal) == pedalboard.Chorus:
-        adjusted_pedal = parse_effect_from_dict(2, effect_info_from_api)
-    elif type(pedal) == pedalboard.Distortion:
         adjusted_pedal = parse_effect_from_dict(3, effect_info_from_api)
+    elif type(pedal) == pedalboard.Distortion:
+        adjusted_pedal = parse_effect_from_dict(2, effect_info_from_api)
     elif type(pedal) == pedalboard.Delay:
         adjusted_pedal = parse_effect_from_dict(5, effect_info_from_api)
     # if there wasn't a match for pedal type then stop
