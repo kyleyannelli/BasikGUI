@@ -39,6 +39,46 @@
          <center>
             <StackPane maxHeight="-Infinity" maxWidth="-Infinity" onMouseDragEntered="#handleDragEnter" onMouseDragged="#handleMouseMoved" prefHeight="226.0" prefWidth="521.0" BorderPane.alignment="CENTER">
                <children>
+                  <ImageView fx:id="distortionAmp" disable="true" fitHeight="226.0" fitWidth="531.0" pickOnBounds="true" preserveRatio="true" visible="false">
+                     <image>
+                        <Image url="@../images/amps/5250Amp.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="distPreKnob" disable="true" fitHeight="49.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true" translateX="-203.0" translateY="67.0" visible="false">
+                     <image>
+                        <Image url="@../images/amps/5250Knob1to1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="distLowKnob" disable="true" fitHeight="49.0" fitWidth="50.0" layoutX="246.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" translateX="-145.0" translateY="67.0" visible="false">
+                     <image>
+                        <Image url="@../images/amps/5250Knob1to1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="distMidKnob" disable="true" fitHeight="49.0" fitWidth="50.0" layoutX="246.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" translateX="-86.0" translateY="67.0" visible="false">
+                     <image>
+                        <Image url="@../images/amps/5250Knob1to1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="distHighKnob" disable="true" fitHeight="49.0" fitWidth="50.0" layoutX="246.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" translateX="-27.0" translateY="67.0" visible="false">
+                     <image>
+                        <Image url="@../images/amps/5250Knob1to1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="distPostKnob" disable="true" fitHeight="49.0" fitWidth="50.0" layoutX="246.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" translateX="32.0" translateY="67.0" visible="false">
+                     <image>
+                        <Image url="@../images/amps/5250Knob1to1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="distResKnob" disable="true" fitHeight="49.0" fitWidth="50.0" layoutX="246.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" translateX="92.0" translateY="67.0" visible="false">
+                     <image>
+                        <Image url="@../images/amps/5250Knob1to1.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="distPresKnob" disable="true" fitHeight="49.0" fitWidth="50.0" layoutX="246.0" layoutY="99.0" pickOnBounds="true" preserveRatio="true" translateX="156.0" translateY="67.0" visible="false">
+                     <image>
+                        <Image url="@../images/amps/5250Knob1to1.png" />
+                     </image>
+                  </ImageView>
                   <ImageView fx:id="cleanAmpImage" fitHeight="222.0" fitWidth="507.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/amps/CleanAmp.png" />
@@ -59,17 +99,17 @@
                         <Image url="@../images/amps/CleanAmpKnob.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="bassKnobImage1" fitHeight="72.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" rotate="-140.0" translateX="35.8" translateY="-50.0">
+                  <ImageView fx:id="reverbKnob" fitHeight="72.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" rotate="-140.0" translateX="35.8" translateY="-50.0">
                      <image>
                         <Image url="@../images/amps/CleanAmpKnob.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="bassKnobImage11" fitHeight="72.0" fitWidth="58.0" layoutX="242.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true" rotate="-140.0" translateX="105.1" translateY="-50.0">
+                  <ImageView fx:id="speedKnob" fitHeight="72.0" fitWidth="58.0" layoutX="242.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true" rotate="-140.0" translateX="105.1" translateY="-50.0">
                      <image>
                         <Image url="@../images/amps/CleanAmpKnob.png" />
                      </image>
                   </ImageView>
-                  <ImageView fx:id="bassKnobImage111" fitHeight="72.0" fitWidth="58.0" layoutX="242.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true" rotate="-140.0" translateX="175.8" translateY="-50.0">
+                  <ImageView fx:id="intenKnob" fitHeight="72.0" fitWidth="58.0" layoutX="242.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true" rotate="-140.0" translateX="175.8" translateY="-50.0">
                      <image>
                         <Image url="@../images/amps/CleanAmpKnob.png" />
                      </image>
@@ -87,7 +127,7 @@
                   <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="51.0" prefWidth="430.0">
                     <buttons>
                         <Button fx:id="openPedalsButton" mnemonicParsing="false" onAction="#openPedalsButton" text="Open Pedals" translateX="-15.0" />
-                        <ToggleButton fx:id="distChannelButton" mnemonicParsing="false" text="Distortion Channel" translateX="-15.0" />
+                        <ToggleButton fx:id="distChannelButton" mnemonicParsing="false" onAction="#toggleDistortionChannel" text="Distortion Channel" translateX="-15.0" />
                         <ToggleButton layoutX="540.0" layoutY="25.0" mnemonicParsing="false" onAction="#onStandby" text="Standby" translateX="-15.0" />
                     </buttons>
                   </ButtonBar>
