@@ -20,6 +20,7 @@ output_url = url + "/output"
 cli_url = url + "/cli"
 effect_url = url + "/effect"
 pedalboard_url = url + "/pedalboard"
+remove_pos_url = url + "/remove-pos"
 
 distortion_amp = [Compressor(ratio=1000), Gain(gain_db=20), Clipping(threshold_db=-10), HighpassFilter(cutoff_frequency_hz=250),
                   Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(gain_db=20), Gain(gain_db=-15), Distortion(drive_db=15.1),
@@ -296,8 +297,7 @@ def handle_input_through_api(stream: AudioStream, user_input: str, is_dist: bool
 
 def remove_effect_through_api(pedal_chain: Chain):
     global amp_start_pos, amp_end_pos, ir_pos, chain_size
-    effect_info_from_api: dict = get_dict_effect_from_api()
-    position: int = int(effect_info_from_api["POSITION"])
+    position: int = int(sync_get_data(remove_pos_url, -1))
     if not(is_position_legal(position)):
         return
     pedal_chain.remove(pedal_chain.__getitem__(position))

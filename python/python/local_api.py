@@ -16,6 +16,7 @@ app = FastAPI()
 # I/O
 app.selected_input = -1
 app.selected_output = -1
+app.remove_pos = -1
 
 # Effects
 app.current_board = []
@@ -67,9 +68,17 @@ async def add_effect(desired_position_in_board: int = Form(...),
 async def remove_effect(effect_position_in_board: int = Form(...)):
     global app
     app.cli_input = "r"
-    app.parameters = []
-    app.parameters.append("POSITION:" + str(effect_position_in_board))
+    app.remove_pos = effect_position_in_board
     return "Effect removal queued..."
+
+
+@app.get("/remove-pos", response_class=PlainTextResponse)
+async def get_cli():
+    global app
+    # since we are faking cli input, this should only be accessible once
+    temp_pos = app.remove_pos
+    app.remove_pos = -1
+    return json.dumps(temp_pos)
 
 
 @app.get("/cli", response_class=PlainTextResponse)
