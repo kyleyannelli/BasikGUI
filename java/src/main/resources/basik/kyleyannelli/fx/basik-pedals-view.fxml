@@ -23,7 +23,7 @@
             <Button fx:id="cancelButton" disable="true" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#toggleButtonOptions" text="Cancel" visible="false" />
             <Button fx:id="reverbButton" disable="true" layoutX="79.0" layoutY="11.0" mnemonicParsing="false" onAction="#addReverbPedal" text="Reverb" visible="false" />
             <Button fx:id="distortionButton" disable="true" layoutX="147.0" layoutY="11.0" mnemonicParsing="false" onAction="#addDistortionPedal" text="Distortion" visible="false" />
-            <Button fx:id="chorusButton" disable="true" layoutX="235.0" layoutY="11.0" mnemonicParsing="false" text="Chorus" visible="false" />
+            <Button fx:id="chorusButton" disable="true" layoutX="235.0" layoutY="11.0" mnemonicParsing="false" onAction="#addChorusPedal" text="Chorus" visible="false" />
          </children>
       </AnchorPane>
    </children>
