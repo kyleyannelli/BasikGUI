@@ -22,6 +22,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Pattern;
 
 public class BasikIOController {
     private boolean isShowing = false;
@@ -59,7 +60,7 @@ public class BasikIOController {
     public void onInputComboBoxSelection(ActionEvent event) throws IOException {
         if(isShowing) {
             putAPIRequest("http://localhost:30108/input", "input_number",
-                    ((String)((ComboBox)event.getSource()).getValue()).replaceAll("[^0-9]", ""));
+                    String.valueOf(getPositionOfString((ComboBox)event.getSource(), (String)((ComboBox)event.getSource()).getValue())));
             isShowing = false;
         }
     }
@@ -67,10 +68,24 @@ public class BasikIOController {
     @FXML
     public void onOutputComboBoxSelection(ActionEvent event) throws IOException {
         if(isShowing) {
+
             putAPIRequest("http://localhost:30108/output", "output_number",
-                    ((String)((ComboBox)event.getSource()).getValue()).replaceAll("[^0-9]", ""));
+                    String.valueOf(getPositionOfString((ComboBox)event.getSource(), (String)((ComboBox)event.getSource()).getValue())));
             isShowing = false;
         }
+    }
+
+    private int getPositionOfString(ComboBox cB, String in) {
+        int i = 0;
+        boolean hit = false;
+        for(Object o : cB.getItems()) {
+            if(o.toString().equals(in)) {
+                hit = true;
+                break;
+            }
+            i++;
+        }
+        return hit ? i : -1;
     }
 
     @FXML
