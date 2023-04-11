@@ -29,7 +29,7 @@ public class PedalLoader {
             } else if(pedal.startsWith("name:chorus")) {
                 pedalModels.add(Chorus.buildFromString(pedal));
             } else {
-                System.out.println("IGNORED: " + pedal);
+
             }
         }
         return pedalModels;
