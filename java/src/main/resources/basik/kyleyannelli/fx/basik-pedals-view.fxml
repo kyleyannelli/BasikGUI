@@ -19,7 +19,7 @@
          <children>
             <Button fx:id="closeButton" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" text="Close" />
             <Button fx:id="addButton" layoutX="85.0" layoutY="11.0" mnemonicParsing="false" onAction="#toggleButtonOptions" text="Add" />
-            <Button fx:id="removeButton" layoutX="157.0" layoutY="11.0" mnemonicParsing="false" text="Remove" translateX="-5.0" />
+            <Button fx:id="removeButton" layoutX="152.0" layoutY="11.0" mnemonicParsing="false" text="Remove" translateX="-5.0" />
             <Button fx:id="cancelButton" disable="true" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#toggleButtonOptions" text="Cancel" visible="false" />
             <Button fx:id="reverbButton" disable="true" layoutX="79.0" layoutY="11.0" mnemonicParsing="false" onAction="#addReverbPedal" text="Reverb" visible="false" />
             <Button fx:id="distortionButton" disable="true" layoutX="147.0" layoutY="11.0" mnemonicParsing="false" onAction="#addDistortionPedal" text="Distortion" visible="false" />

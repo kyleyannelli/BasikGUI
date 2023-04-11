@@ -66,6 +66,21 @@
                         <Image url="@../images/amps/CleanAmpKnob.png" />
                      </image>
                   </ImageView>
+                  <ImageView fx:id="bassKnobImage1" fitHeight="72.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true" rotate="-140.0" translateX="35.8" translateY="-50.0">
+                     <image>
+                        <Image url="@../images/amps/CleanAmpKnob.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="bassKnobImage11" fitHeight="72.0" fitWidth="58.0" layoutX="242.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true" rotate="-140.0" translateX="105.1" translateY="-50.0">
+                     <image>
+                        <Image url="@../images/amps/CleanAmpKnob.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="bassKnobImage111" fitHeight="72.0" fitWidth="58.0" layoutX="242.0" layoutY="94.0" pickOnBounds="true" preserveRatio="true" rotate="-140.0" translateX="175.8" translateY="-50.0">
+                     <image>
+                        <Image url="@../images/amps/CleanAmpKnob.png" />
+                     </image>
+                  </ImageView>
                </children>
             </StackPane>
          </center>
