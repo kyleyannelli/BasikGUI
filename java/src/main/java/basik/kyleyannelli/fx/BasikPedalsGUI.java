@@ -26,6 +26,7 @@ public class BasikPedalsGUI extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 600, 413);
         JMetro jMetro = new JMetro(scene, Style.DARK);
         stage.setTitle("BasikGUI - Pedals");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
         stage.setOnCloseRequest(new EventHandler<WindowEvent>() {

@@ -5,10 +5,12 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -34,15 +36,6 @@
         </menus>
       </MenuBar>
       <BorderPane prefHeight="413.0" prefWidth="600.0">
-         <bottom>
-            <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="54.0" prefWidth="600.0">
-              <buttons>
-                  <Button fx:id="openPedalsButton" mnemonicParsing="false" onAction="#openPedalsButton" text="Open Pedals" translateX="-15.0" />
-                  <ToggleButton fx:id="distChannelButton" mnemonicParsing="false" text="Distortion Channel" translateX="-15.0" />
-                  <ToggleButton layoutX="540.0" layoutY="25.0" mnemonicParsing="false" onAction="#onStandby" text="Standby" translateX="-15.0" />
-              </buttons>
-            </ButtonBar>
-         </bottom>
          <center>
             <StackPane maxHeight="-Infinity" maxWidth="-Infinity" onMouseDragEntered="#handleDragEnter" onMouseDragged="#handleMouseMoved" prefHeight="226.0" prefWidth="521.0" BorderPane.alignment="CENTER">
                <children>
@@ -84,6 +77,24 @@
                </children>
             </StackPane>
          </center>
+         <top>
+            <Separator prefHeight="17.0" prefWidth="600.0" style="-fx-background-color: #454545; -fx-border-color: #454545;" visible="false" BorderPane.alignment="CENTER" />
+         </top>
+         <bottom>
+            <HBox prefHeight="66.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Separator orientation="VERTICAL" prefHeight="51.0" prefWidth="93.0" visible="false" />
+                  <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="51.0" prefWidth="430.0">
+                    <buttons>
+                        <Button fx:id="openPedalsButton" mnemonicParsing="false" onAction="#openPedalsButton" text="Open Pedals" translateX="-15.0" />
+                        <ToggleButton fx:id="distChannelButton" mnemonicParsing="false" text="Distortion Channel" translateX="-15.0" />
+                        <ToggleButton layoutX="540.0" layoutY="25.0" mnemonicParsing="false" onAction="#onStandby" text="Standby" translateX="-15.0" />
+                    </buttons>
+                  </ButtonBar>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
+               </children>
+            </HBox>
+         </bottom>
       </BorderPane>
    </children>
 </VBox>

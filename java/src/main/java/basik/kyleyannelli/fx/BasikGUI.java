@@ -39,6 +39,7 @@ public class BasikGUI extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 600, 413);
         JMetro jMetro = new JMetro(scene, Style.DARK);
         stage.setTitle("BasikGUI");
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }

@@ -21,6 +21,7 @@ public class BasikIOGUI extends Application {
         Scene scene = new Scene(fxmlLoader.load(), 600, 413);
         JMetro jMetro = new JMetro(scene, Style.DARK);
         primaryStage.setTitle("BasikGUI - I/O");
+        primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
