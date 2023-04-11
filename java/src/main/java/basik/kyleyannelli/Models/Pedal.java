@@ -1,5 +1,8 @@
 package basik.kyleyannelli.Models;
 
+import java.util.HashMap;
+import java.util.regex.Pattern;
+
 public abstract class Pedal {
     private final String name;
     // position of pedal on effects chain (pedalboard)
@@ -74,4 +77,17 @@ public abstract class Pedal {
             return 0.0F;
         }
     }
+
+    public static HashMap<String, String> hashParamString(String s) {
+        String[] hasha = s.split(Pattern.quote(","));
+        HashMap<String, String> hashedValues = new HashMap<>();
+        for(String values : hasha) {
+            String[] valuesSplit = values.split(Pattern.quote(":"));
+            hashedValues.put(valuesSplit[0], valuesSplit[1]);
+        }
+        return hashedValues;
+    }
+
+    public abstract Object viewize();
+    public static Pedal buildFromString(String s) {return null;};
 }

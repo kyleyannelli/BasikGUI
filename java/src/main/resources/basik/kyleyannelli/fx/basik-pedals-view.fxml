@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #454545;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="basik.kyleyannelli.fx.Controllers.BasikPedalsController">
    <children>
-      <HBox fx:id="pedalHBox" prefHeight="359.0" prefWidth="600.0" />
-      <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0">
-        <buttons>
-          <Button mnemonicParsing="false" text="Remove All" translateX="-15.0" />
-            <Button layoutX="540.0" layoutY="18.0" mnemonicParsing="false" text="Close" translateX="-15.0" />
-        </buttons>
-      </ButtonBar>
+      <HBox fx:id="pedalHBox" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="359.0" prefWidth="600.0">
+         <padding>
+            <Insets top="60.0" />
+         </padding>
+         <VBox.margin>
+            <Insets right="20.0" />
+         </VBox.margin></HBox>
+      <AnchorPane prefHeight="66.0" prefWidth="600.0">
+         <children>
+            <Button fx:id="closeButton" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" text="Close" />
+            <Button fx:id="addButton" layoutX="85.0" layoutY="11.0" mnemonicParsing="false" onAction="#toggleButtonOptions" text="Add" />
+            <Button fx:id="removeButton" layoutX="157.0" layoutY="11.0" mnemonicParsing="false" text="Remove" translateX="-5.0" />
+            <Button fx:id="cancelButton" disable="true" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#toggleButtonOptions" text="Cancel" visible="false" />
+            <Button fx:id="reverbButton" disable="true" layoutX="79.0" layoutY="11.0" mnemonicParsing="false" onAction="#addReverbPedal" text="Reverb" visible="false" />
+            <Button fx:id="distortionButton" disable="true" layoutX="147.0" layoutY="11.0" mnemonicParsing="false" onAction="#addDistortionPedal" text="Distortion" visible="false" />
+            <Button fx:id="chorusButton" disable="true" layoutX="235.0" layoutY="11.0" mnemonicParsing="false" text="Chorus" visible="false" />
+         </children>
+      </AnchorPane>
    </children>
 </VBox>

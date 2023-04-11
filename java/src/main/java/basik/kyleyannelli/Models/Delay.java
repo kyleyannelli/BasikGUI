@@ -12,4 +12,13 @@ public class Delay extends Pedal {
     public Delay(int positionInBoard) {
         super("Delay", positionInBoard);
     }
+
+    @Override
+    public Object viewize() {
+        return null;
+    }
+
+    public static Delay buildFromString(String s) {
+        return null;
+    }
 }

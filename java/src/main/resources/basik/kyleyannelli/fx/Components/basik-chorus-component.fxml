@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="143.0" type="StackPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="237.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@ChorusPedal.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="mixKnobImage" fitHeight="34.0" fitWidth="27.0" pickOnBounds="true" preserveRatio="true" rotate="-150.0" translateX="-50.0" translateY="-69.0">
+         <image>
+            <Image url="@ChorusKnobTr.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="depthKnobImage" fitHeight="34.0" fitWidth="27.0" layoutX="68.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true" rotate="-145.0" translateX="-16.9" translateY="-69.0">
+         <image>
+            <Image url="@ChorusKnobTr.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="feedbackKnobImage" fitHeight="34.0" fitWidth="27.0" layoutX="68.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true" rotate="-145.0" translateX="16.2" translateY="-69.0">
+         <image>
+            <Image url="@ChorusKnobTr.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="rateKnobImage" fitHeight="34.0" fitWidth="27.0" layoutX="68.0" layoutY="115.0" pickOnBounds="true" preserveRatio="true" rotate="-145.0" translateX="49.0" translateY="-69.0">
+         <image>
+            <Image url="@ChorusKnobTr.png" />
+         </image>
+      </ImageView>
+   </children>
+</fx:root>

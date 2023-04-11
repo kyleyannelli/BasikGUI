@@ -1,6 +1,9 @@
 package basik.kyleyannelli.Helpers;
 
+import basik.kyleyannelli.Models.Chorus;
+import basik.kyleyannelli.Models.Distortion;
 import basik.kyleyannelli.Models.Pedal;
+import basik.kyleyannelli.Models.Reverb;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,12 +11,28 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 public class PedalLoader {
     public static ArrayList<Pedal> getPedalboardFromAPI() throws IOException {
-        ArrayList<Pedal> pedals = new ArrayList<>();
-        System.out.println(basicGetReq("http://localhost:30108/pedalboard"));
-        return pedals;
+        String[] pedals = basicGetReq("http://localhost:30108/pedalboard").replace("\"", "")
+                .replace("[", "")
+                .replace("]", "")
+                .replace("\\", "")
+                .split(Pattern.quote("|"));
+        ArrayList<Pedal> pedalModels = new ArrayList<>();
+        for(String pedal : pedals) {
+            if(pedal.startsWith("name:reverb")) {
+                pedalModels.add(Reverb.buildFromString(pedal));
+            } else if(pedal.startsWith("name:distortion")) {
+                pedalModels.add(Distortion.buildFromString(pedal));
+            } else if(pedal.startsWith("name:chorus")) {
+                pedalModels.add(Chorus.buildFromString(pedal));
+            } else {
+                System.out.println("IGNORED: " + pedal);
+            }
+        }
+        return pedalModels;
     }
 
     public static String basicGetReq(String urlString) throws IOException {

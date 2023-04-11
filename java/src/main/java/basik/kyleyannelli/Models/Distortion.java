@@ -1,5 +1,10 @@
 package basik.kyleyannelli.Models;
 
+import basik.kyleyannelli.fx.Components.BasikDistortionComponent;
+import basik.kyleyannelli.fx.Components.BasikReverbComponent;
+
+import java.util.HashMap;
+
 public class Distortion extends Pedal {
     /**
      * gainDb: The gain in decibels.
@@ -23,5 +28,19 @@ public class Distortion extends Pedal {
 
     public void setGainDb(float gainDb) {
         this.gainDb = keepInRange(gainDb);
+    }
+
+    @Override
+    public Object viewize() {
+        BasikDistortionComponent distortionComponent = new BasikDistortionComponent();
+        distortionComponent.setKnob(distortionComponent.getDistKnobImage(), (gainDb / 100.0F));
+        return distortionComponent;
+    }
+
+    public static Distortion buildFromString(String s) {
+        HashMap<String, String> hashedValues = Pedal.hashParamString(s);
+        Distortion distortion = new Distortion(Integer.parseInt(hashedValues.get("position")));
+        distortion.setGainDb(Float.parseFloat(hashedValues.get("drive_db")));
+        return distortion;
     }
 }

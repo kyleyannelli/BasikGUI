@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="143.0" type="StackPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="237.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@DistortionPedal.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="levelKnobImage" fitHeight="29.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" translateX="0.1" translateY="-56.5">
+         <image>
+            <Image url="@DistSmallKnobT.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="toneKnobImage" fitHeight="41.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" translateX="-39.2" translateY="-86.5">
+         <image>
+            <Image url="@BigDistKnob.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="distKnobImage" fitHeight="41.0" fitWidth="42.0" layoutX="61.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" translateX="39.2" translateY="-86.5">
+         <image>
+            <Image url="@BigDistKnob.png" />
+         </image>
+      </ImageView>
+   </children>
+</fx:root>

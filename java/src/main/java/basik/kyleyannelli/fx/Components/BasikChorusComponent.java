@@ -10,20 +10,20 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class BasikReverbComponent extends StackPane implements Initializable {
-    private final float minKnobRotation = -154.0F, maxKnobRotation = 154F;
+public class BasikChorusComponent extends StackPane implements Initializable {
+    private final float minKnobRotation = -150.0F, maxKnobRotation = 150.0F;
     @FXML
-    private ImageView mixKnob;
+    private ImageView mixKnobImage;
     @FXML
-    private ImageView widthKnob;
+    private ImageView depthKnobImage;
     @FXML
-    private ImageView dampingKnob;
+    private ImageView feedbackKnobImage;
     @FXML
-    private ImageView sizeKnob;
+    private ImageView rateKnobImage;
     private ImageView basePedal;
-    public BasikReverbComponent() {
+    public BasikChorusComponent() {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(
-                "basik-reverb-component.fxml"));
+                "basik-chorus-component.fxml"));
         fxmlLoader.setRoot(this);
         fxmlLoader.setController(this);
 
@@ -50,19 +50,17 @@ public class BasikReverbComponent extends StackPane implements Initializable {
         }
     }
 
-    public ImageView getMixKnob() {
-        return mixKnob;
+    public ImageView getMixKnobImage() {
+        return mixKnobImage;
     }
 
-    public ImageView getWidthKnob() {
-        return widthKnob;
+    public ImageView getDepthKnobImage() {
+        return depthKnobImage;
     }
 
-    public ImageView getSizeKnob() {
-        return sizeKnob;
+    public ImageView getFeedbackKnobImage() {
+        return feedbackKnobImage;
     }
 
-    public ImageView getDampingKnob() {
-        return dampingKnob;
-    }
+    public ImageView getRateKnobImage() { return rateKnobImage; }
 }
