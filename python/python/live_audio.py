@@ -30,7 +30,7 @@ distortion_ir = Convolution(os.path.dirname(__file__) +
 
 clean_amp = [Compressor(), Gain(gain_db=-20),
              HighpassFilter(cutoff_frequency_hz=250), Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(35)]
-clean_ir = Convolution(os.path.dirname(__file__) + "/../impulse-responses/clean/01_Twin73_dome_edge_L19.wav")
+clean_ir = Convolution(os.path.dirname(__file__) + "/../impulse-responses/distortion/OD-R112-V30-DYN-57-P10-30-BRIGHT.wav")
 
 chain_size: int = 0
 amp_start_pos: int = -1
@@ -111,19 +111,25 @@ def sync_put_data(put_url: str, data: dict):
 
 def remove_amp(pedal_chain: Chain):
     global amp_start_pos, amp_end_pos, ir_pos, chain_size
-    # remove the ir before the loop as we won't know its position after
-    if ir_pos >= 0:
-        pedal_chain.remove(pedal_chain.__getitem__(ir_pos))
-        ir_pos = -1
-        chain_size -= 1
-    if amp_start_pos != -1:
-        x = amp_end_pos
-        while x >= amp_start_pos:
-            pedal_chain.remove(pedal_chain.__getitem__(x))
-            chain_size -= 1
-            x -= 1
-        amp_start_pos = -1
-        amp_end_pos = -1
+    for x in range(chain_size - 1, -1, -1):
+        pedal_chain.remove(pedal_chain.__getitem__(x))
+    chain_size = 0
+    amp_start_pos = -1
+    amp_end_pos = -1
+    ir_pos = -1
+    # # remove the ir before the loop as we won't know its position after
+    # if ir_pos >= 0:
+    #     pedal_chain.remove(pedal_chain.__getitem__(ir_pos))
+    #     ir_pos = -1
+    #     chain_size -= 1
+    # if amp_start_pos != -1:
+    #     x = amp_end_pos
+    #     while x >= amp_start_pos:
+    #         pedal_chain.remove(pedal_chain.__getitem__(x))
+    #         chain_size -= 1
+    #         x -= 1
+    #     amp_start_pos = -1
+    #     amp_end_pos = -1
 
 
 def set_clean_amp(pedal_chain: Chain):

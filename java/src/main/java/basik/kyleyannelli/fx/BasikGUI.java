@@ -17,20 +17,20 @@ import static java.lang.Thread.sleep;
 public class BasikGUI extends Application {
     @Override
     public void init() throws Exception {
-//        URL url = new URL("http://localhost:30108/input");
-//        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-//        connection.setRequestMethod("GET");
-//        int responseCode = 0;
-//        while(responseCode != 200) {
-//            try {
-//                connection.connect();
-//                sleep(250);
-//                responseCode = connection.getResponseCode();
-//            }
-//            catch (Exception e) {
-//
-//            }
-//        }
+        URL url = new URL("http://localhost:30108/input");
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        int responseCode = 0;
+        while(responseCode != 200) {
+            try {
+                connection.connect();
+                sleep(250);
+                responseCode = connection.getResponseCode();
+            }
+            catch (Exception e) {
+
+            }
+        }
     }
 
     @Override
