@@ -18,7 +18,14 @@ public class Delay extends Pedal {
         return null;
     }
 
+    @Override
+    public boolean equals(Object p) {
+        return false;
+    }
+
     public static Delay buildFromString(String s) {
         return null;
     }
+
+
 }

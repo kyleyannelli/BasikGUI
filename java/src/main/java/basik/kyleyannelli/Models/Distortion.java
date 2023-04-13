@@ -34,6 +34,7 @@ public class Distortion extends Pedal {
     public Object viewize() {
         BasikDistortionComponent distortionComponent = new BasikDistortionComponent();
         distortionComponent.setKnob(distortionComponent.getDistKnobImage(), (gainDb / 100.0F));
+        distortionComponent.setDistortion(this);
         return distortionComponent;
     }
 
@@ -42,5 +43,15 @@ public class Distortion extends Pedal {
         Distortion distortion = new Distortion(Integer.parseInt(hashedValues.get("position")));
         distortion.setGainDb(Float.parseFloat(hashedValues.get("drive_db")));
         return distortion;
+    }
+
+    @Override
+    public boolean equals(Object p) {
+        if(p == this) return true;
+        if(p instanceof Distortion) {
+            return ((Distortion) p).gainDb == gainDb &&
+                    ((Distortion) p).getPositionInBoard() == getPositionInBoard();
+        }
+        return false;
     }
 }

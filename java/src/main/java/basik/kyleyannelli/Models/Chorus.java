@@ -56,6 +56,7 @@ public class Chorus extends Pedal {
         chorusComponent.setKnob(chorusComponent.getMixKnobImage(), mix);
         float rateHzNormalized = (rateHz - 100F)/(15000F - 100F);
         chorusComponent.setKnob(chorusComponent.getRateKnobImage(), rateHzNormalized/15000F);
+        chorusComponent.setChorus(this);
         return chorusComponent;
     }
 
@@ -66,5 +67,17 @@ public class Chorus extends Pedal {
         chorus.mix = Float.parseFloat(hashedValues.get("mix"));
         chorus.rateHz = Float.parseFloat(hashedValues.get("rate_hz"));
         return chorus;
+    }
+
+    @Override
+    public boolean equals(Object p) {
+        if(p == this) return true;
+        if(p instanceof Chorus) {
+            return ((Chorus) p).mix == mix &&
+                    ((Chorus) p).rateHz == rateHz &&
+                    ((Chorus) p).depth == depth &&
+                    ((Chorus) p).getPositionInBoard() == getPositionInBoard();
+        }
+        return false;
     }
 }

@@ -18,6 +18,11 @@ public class NoiseGate extends Pedal {
         return null;
     }
 
+    @Override
+    public boolean equals(Object p) {
+        return false;
+    }
+
     public static NoiseGate buildFromString(String s) {
         return null;
     }

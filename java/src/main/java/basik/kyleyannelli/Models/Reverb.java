@@ -57,7 +57,20 @@ public class Reverb extends Pedal {
         reverbComponent.setKnob(reverbComponent.getWidthKnob(), 1.0F);
         reverbComponent.setKnob(reverbComponent.getMixKnob(), mix);
         reverbComponent.setKnob(reverbComponent.getSizeKnob(), roomSize);
+        reverbComponent.setReverb(this);
         return reverbComponent;
+    }
+
+    @Override
+    public boolean equals(Object p) {
+        if(p == this) return true;
+        if(p instanceof Reverb) {
+            return ((Reverb) p).mix == mix &&
+                    ((Reverb) p).damping == damping &&
+                    ((Reverb) p).roomSize == roomSize &&
+                    ((Reverb) p).getPositionInBoard() == getPositionInBoard();
+        }
+        return false;
     }
 
     public static Reverb buildFromString(String s) {

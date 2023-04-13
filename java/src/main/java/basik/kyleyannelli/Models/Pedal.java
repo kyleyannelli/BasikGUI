@@ -89,5 +89,7 @@ public abstract class Pedal {
     }
 
     public abstract Object viewize();
+    @Override
+    public abstract boolean equals(Object p);
     public static Pedal buildFromString(String s) {return null;};
 }
