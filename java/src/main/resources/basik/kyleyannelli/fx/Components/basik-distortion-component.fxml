@@ -4,26 +4,31 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="143.0" type="StackPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="277.0" prefWidth="143.0" type="StackPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="237.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="237.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true" translateY="20.0">
          <image>
             <Image url="@DistortionPedal.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="levelKnobImage" fitHeight="29.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" translateX="0.1" translateY="-56.5">
+      <ImageView fx:id="levelKnobImage" fitHeight="29.0" fitWidth="39.0" pickOnBounds="true" preserveRatio="true" translateX="0.1" translateY="-36.5">
          <image>
             <Image url="@DistSmallKnobT.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="toneKnobImage" fitHeight="41.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" translateX="-39.2" translateY="-86.5">
+      <ImageView fx:id="toneKnobImage" fitHeight="41.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true" translateX="-39.2" translateY="-66.5">
          <image>
             <Image url="@BigDistKnob.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="distKnobImage" fitHeight="41.0" fitWidth="42.0" layoutX="61.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" translateX="39.2" translateY="-86.5">
+      <ImageView fx:id="distKnobImage" fitHeight="41.0" fitWidth="42.0" layoutX="61.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" translateX="39.2" translateY="-66.5">
          <image>
             <Image url="@BigDistKnob.png" />
+         </image>
+      </ImageView>
+      <ImageView disable="true" fitHeight="33.0" fitWidth="30.0" onMouseClicked="#removeButtonImage" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" translateY="-118.0" visible="false" fx:id="xButtonImage">
+         <image>
+            <Image url="@FlaticonRemoveIcon.png" />
          </image>
       </ImageView>
    </children>

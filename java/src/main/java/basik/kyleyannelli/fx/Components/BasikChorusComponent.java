@@ -1,9 +1,12 @@
 package basik.kyleyannelli.fx.Components;
 
+import basik.kyleyannelli.Helpers.BasikAPI;
+import basik.kyleyannelli.Models.Chorus;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
@@ -11,7 +14,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class BasikChorusComponent extends StackPane implements Initializable {
+    private Chorus chorus;
     private final float minKnobRotation = -150.0F, maxKnobRotation = 150.0F;
+    @FXML
+    private ImageView xButtonImage;
     @FXML
     private ImageView mixKnobImage;
     @FXML
@@ -63,4 +69,33 @@ public class BasikChorusComponent extends StackPane implements Initializable {
     }
 
     public ImageView getRateKnobImage() { return rateKnobImage; }
+
+    public Chorus getChorus() {
+        return chorus;
+    }
+
+    public void setChorus(Chorus chorus) {
+        this.chorus = chorus;
+    }
+
+    public void setRemove(boolean doShowRemove) {
+        if(doShowRemove) {
+            xButtonImage.setDisable(false);
+            xButtonImage.setVisible(true);
+        } else {
+            xButtonImage.setDisable(true);
+            xButtonImage.setVisible(false);
+        }
+    }
+
+    @FXML
+    public void removeButtonImage(MouseEvent event) {
+        try {
+            BasikAPI.deletePedalRequest(this.chorus.getPositionInBoard());
+            ((ImageView)event.getSource()).setDisable(true);
+            ((StackPane)((ImageView)event.getSource()).getParent()).setVisible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

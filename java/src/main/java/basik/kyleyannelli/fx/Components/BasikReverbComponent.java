@@ -1,9 +1,12 @@
 package basik.kyleyannelli.fx.Components;
 
+import basik.kyleyannelli.Helpers.BasikAPI;
+import basik.kyleyannelli.Models.Reverb;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
 import java.io.IOException;
@@ -11,7 +14,10 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class BasikReverbComponent extends StackPane implements Initializable {
+    private Reverb reverb;
     private final float minKnobRotation = -154.0F, maxKnobRotation = 154F;
+    @FXML
+    private ImageView xButtonImage;
     @FXML
     private ImageView mixKnob;
     @FXML
@@ -64,5 +70,30 @@ public class BasikReverbComponent extends StackPane implements Initializable {
 
     public ImageView getDampingKnob() {
         return dampingKnob;
+    }
+
+    public void setReverb(Reverb reverb) { this.reverb = reverb; }
+
+    public Reverb getReverb() { return reverb; }
+
+    public void setRemove(boolean doShowRemove) {
+        if(doShowRemove) {
+            xButtonImage.setDisable(false);
+            xButtonImage.setVisible(true);
+        } else {
+            xButtonImage.setDisable(true);
+            xButtonImage.setVisible(false);
+        }
+    }
+
+    @FXML
+    public void removeButtonImage(MouseEvent event) {
+        try {
+            BasikAPI.deletePedalRequest(this.reverb.getPositionInBoard());
+            ((ImageView)event.getSource()).setDisable(true);
+            ((StackPane)((ImageView)event.getSource()).getParent()).setVisible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -4,31 +4,41 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.StackPane?>
 
-<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="236.0" prefWidth="143.0" type="StackPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="277.0" prefWidth="143.0" type="StackPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fitHeight="237.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="237.0" fitWidth="164.0" pickOnBounds="true" preserveRatio="true" translateY="20.0">
          <image>
             <Image url="@ReverbPedal.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="widthKnob" fitHeight="49.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" translateX="-49.5" translateY="-70.0">
+      <ImageView fx:id="widthKnob" fitHeight="49.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" translateX="-49.5" translateY="-50.0">
          <image>
             <Image url="@ReverbKnob.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="dampingKnob" fitHeight="49.0" fitWidth="30.0" layoutX="67.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" translateX="-16.8" translateY="-70.0">
+      <ImageView fx:id="dampingKnob" fitHeight="49.0" fitWidth="30.0" layoutX="67.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" translateX="-16.8" translateY="-50.0">
          <image>
             <Image url="@ReverbKnob.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="sizeKnob" fitHeight="49.0" fitWidth="30.0" layoutX="67.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" translateX="17.1" translateY="-70.0">
+      <ImageView fx:id="sizeKnob" fitHeight="49.0" fitWidth="30.0" layoutX="67.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" translateX="17.1" translateY="-50.0">
          <image>
             <Image url="@ReverbKnob.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="mixKnob" fitHeight="49.0" fitWidth="30.0" layoutX="67.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" translateX="49.5" translateY="-70.0">
+      <ImageView fx:id="mixKnob" fitHeight="49.0" fitWidth="30.0" layoutX="67.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" translateX="49.5" translateY="-50.0">
          <image>
             <Image url="@ReverbKnob.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="9.0" fitWidth="10.0" opacity="0.82" pickOnBounds="true" preserveRatio="true" translateY="-86.0">
+         <image>
+            <Image url="@LedOn.png" />
+         </image>
+      </ImageView>
+      <ImageView disable="true" fitHeight="33.0" fitWidth="30.0" onMouseClicked="#removeButtonImage" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" translateY="-118.0" visible="false" fx:id="xButtonImage">
+         <image>
+            <Image url="@FlaticonRemoveIcon.png" />
          </image>
       </ImageView>
    </children>

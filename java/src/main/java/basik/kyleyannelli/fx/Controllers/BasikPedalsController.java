@@ -12,7 +12,9 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
 import javafx.util.Duration;
 import org.apache.http.HttpEntity;
@@ -33,37 +35,54 @@ public class BasikPedalsController implements Initializable {
     @FXML
     private HBox pedalHBox;
     @FXML
-    private Button closeButton, addButton, removeButton, cancelButton, reverbButton, distortionButton, chorusButton;
+    private Button closeButton, addButton, cancelButton, reverbButton, distortionButton, chorusButton;
+    @FXML
+    private ToggleButton removeToggleButton;
     private ArrayList<Pedal> pedals;
     private Timeline timeline;
     private boolean isAdding = false;
+    private boolean doShowRemove;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        doShowRemove = false;
         Platform.runLater(() -> {
-            timeline = new Timeline(new KeyFrame(Duration.seconds(0.5), e -> updatePedals()));
+            timeline = new Timeline(new KeyFrame(Duration.seconds(0.4), e -> updatePedals()));
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.playFromStart();
         });
     }
 
     private void updatePedals() {
-        pedalHBox.getChildren().removeAll(pedalHBox.getChildren());
+        boolean isChanged =  false;
         try {
-            pedals = PedalLoader.getPedalboardFromAPI();
+            ArrayList<Pedal> newPedals = PedalLoader.getPedalboardFromAPI();
+            if(!newPedals.equals(pedals) || pedals == null) {
+                isChanged = true;
+                pedals = newPedals;
+            }
         } catch (IOException e) {
             pedals = new ArrayList<>();
         }
-        for(Pedal pedal : pedals) {
-            if(pedal.getClass() == Reverb.class) {
-                pedalHBox.getChildren().add((BasikReverbComponent)pedal.viewize());
-            } else if(pedal.getClass() == Chorus.class) {
-                pedalHBox.getChildren().add((BasikChorusComponent)pedal.viewize());
-            } else if(pedal.getClass() == Distortion.class) {
-                pedalHBox.getChildren().add((BasikDistortionComponent)pedal.viewize());
-            } else if(pedal.getClass() == Delay.class) {
+        if(isChanged) {
+            pedalHBox.getChildren().removeAll(pedalHBox.getChildren());
+            for(Pedal pedal : pedals) {
+                if(pedal.getClass() == Reverb.class) {
+                    BasikReverbComponent basikReverbComponent = (BasikReverbComponent)pedal.viewize();
+                    basikReverbComponent.setRemove(doShowRemove);
+                    pedalHBox.getChildren().add(basikReverbComponent);
+                } else if(pedal.getClass() == Chorus.class) {
+                    BasikChorusComponent basikChorusComponent = (BasikChorusComponent)pedal.viewize();
+                    basikChorusComponent.setRemove(doShowRemove);
+                    pedalHBox.getChildren().add(basikChorusComponent);
+                } else if(pedal.getClass() == Distortion.class) {
+                    BasikDistortionComponent basikDistortionComponent = (BasikDistortionComponent)pedal.viewize();
+                    basikDistortionComponent.setRemove(doShowRemove);
+                    pedalHBox.getChildren().add(basikDistortionComponent);
+                } else if(pedal.getClass() == Delay.class) {
 
-            } else if(pedal.getClass() == NoiseGate.class) {
+                } else if(pedal.getClass() == NoiseGate.class) {
 
+                }
             }
         }
     }
@@ -88,6 +107,26 @@ public class BasikPedalsController implements Initializable {
         putEffectAPIRequest(3);
     }
 
+    @FXML
+    private void toggleRemoveFromButton(ActionEvent event) {
+        if(doShowRemove) doShowRemove = false;
+        else doShowRemove = true;
+        if(doShowRemove) {
+            pedalHBox.setPadding(new Insets(40,0,0,0));
+        } else {
+            pedalHBox.setPadding(new Insets(20,0,0,0));
+        }
+        for(Object o : pedalHBox.getChildren()) {
+            if(o.getClass().equals(BasikReverbComponent.class)) {
+                ((BasikReverbComponent) o).setRemove(doShowRemove);
+            } else if(o.getClass().equals(BasikChorusComponent.class)) {
+                ((BasikChorusComponent) o).setRemove(doShowRemove);
+            } else if(o.getClass().equals(BasikDistortionComponent.class)) {
+                ((BasikDistortionComponent) o).setRemove(doShowRemove);
+            }
+        }
+    }
+
     private void putEffectAPIRequest(int effectNumber) throws IOException {
         HttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(RequestConfig.custom().build()).build();
         HttpPut request = new HttpPut("http://localhost:30108/effect");
@@ -104,7 +143,7 @@ public class BasikPedalsController implements Initializable {
     private void toggleOptionsOpposite(boolean b) {
         fullToggleButton(closeButton, !b);
         fullToggleButton(addButton, !b);
-        fullToggleButton(removeButton, !b);
+        removeToggleButton.setDisable(b);removeToggleButton.setVisible(!b);
 
         fullToggleButton(cancelButton, b);
         fullToggleButton(reverbButton, b);
