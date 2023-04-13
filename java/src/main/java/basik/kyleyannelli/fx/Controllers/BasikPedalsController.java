@@ -46,7 +46,7 @@ public class BasikPedalsController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         doShowRemove = false;
         Platform.runLater(() -> {
-            timeline = new Timeline(new KeyFrame(Duration.seconds(0.4), e -> updatePedals()));
+            timeline = new Timeline(new KeyFrame(Duration.seconds(0.65), e -> updatePedals()));
             timeline.setCycleCount(Animation.INDEFINITE);
             timeline.playFromStart();
         });
