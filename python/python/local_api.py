@@ -72,6 +72,14 @@ async def remove_effect(effect_position_in_board: int = Form(...)):
     return "Effect removal queued..."
 
 
+@app.delete("/effect/{position}")
+async def remove_effect(position: int):
+    global app
+    app.cli_input = "r"
+    app.remove_pos = position
+    return "Effect removal queued..."
+
+
 @app.get("/remove-pos", response_class=PlainTextResponse)
 async def get_cli():
     global app
