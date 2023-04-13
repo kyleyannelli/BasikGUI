@@ -28,7 +28,7 @@
             <Button fx:id="reverbButton" disable="true" layoutX="79.0" layoutY="8.0" mnemonicParsing="false" onAction="#addReverbPedal" text="Reverb" visible="false" />
             <Button fx:id="distortionButton" disable="true" layoutX="147.0" layoutY="8.0" mnemonicParsing="false" onAction="#addDistortionPedal" text="Distortion" visible="false" />
             <Button fx:id="chorusButton" disable="true" layoutX="235.0" layoutY="8.0" mnemonicParsing="false" onAction="#addChorusPedal" text="Chorus" translateX="-2.0" visible="false" />
-            <Button fx:id="delayButton" disable="true" layoutX="315.0" layoutY="9.0" mnemonicParsing="false" onAction="#addDelayPedal" text="Delay" translateX="-2.0" visible="false" />
+            <Button fx:id="delayButton" disable="true" layoutX="315.0" layoutY="9.0" mnemonicParsing="false" onAction="#addDelayPedal" text="Delay" translateX="-8.0" visible="false" />
          </children>
       </AnchorPane>
    </children>
