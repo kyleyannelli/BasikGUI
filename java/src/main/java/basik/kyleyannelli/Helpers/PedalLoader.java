@@ -1,9 +1,6 @@
 package basik.kyleyannelli.Helpers;
 
-import basik.kyleyannelli.Models.Chorus;
-import basik.kyleyannelli.Models.Distortion;
-import basik.kyleyannelli.Models.Pedal;
-import basik.kyleyannelli.Models.Reverb;
+import basik.kyleyannelli.Models.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,8 +25,8 @@ public class PedalLoader {
                 pedalModels.add(Distortion.buildFromString(pedal));
             } else if(pedal.startsWith("name:chorus")) {
                 pedalModels.add(Chorus.buildFromString(pedal));
-            } else {
-
+            } else if(pedal.startsWith("name:delay")) {
+                pedalModels.add(Delay.buildFromString(pedal));
             }
         }
         return pedalModels;

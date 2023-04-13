@@ -2,12 +2,16 @@ package basik.kyleyannelli.fx.Components;
 
 import basik.kyleyannelli.Helpers.BasikAPI;
 import basik.kyleyannelli.Models.Chorus;
+import basik.kyleyannelli.fx.BasikParameterGUI;
+import basik.kyleyannelli.fx.Controllers.BasikParameterController;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -42,7 +46,16 @@ public class BasikChorusComponent extends StackPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        Platform.runLater(() -> {
+            mixKnobImage.setOnMouseClicked((MouseEvent event) -> {
+                BasikParameterGUI basikParameterGUI = new BasikParameterGUI();
+                try {
+                    basikParameterGUI.start(new Stage());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        });
     }
 
     public void setKnob(ImageView knob, float value) {

@@ -23,8 +23,6 @@ public class BasikParameterGUI extends Application {
         this.stage = stage;
         this.fxmlLoader = new FXMLLoader(BasikParameterGUI.class.getResource("basik-parameter-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 200, 400);
-//        JMetro jMetro = new JMetro(scene, Style.DARK);
-        stage.setTitle("BasikGUI");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();

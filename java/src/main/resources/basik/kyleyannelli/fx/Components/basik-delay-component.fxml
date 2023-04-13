@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.StackPane?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="277.0" prefWidth="143.0" type="StackPane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="237.0" fitWidth="143.0" pickOnBounds="true" preserveRatio="true" translateY="20.0">
+         <image>
+            <Image url="@DelayPedal.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" translateX="0.5" translateY="-46.0">
+         <image>
+            <Image url="@DelayKnobTr.png" />
+         </image>
+      </ImageView>
+      <ImageView disable="true" fitHeight="33.0" fitWidth="30.0" onMouseClicked="#removeButtonImage" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" translateY="-118.0" visible="false" fx:id="xButtonImage">
+         <image>
+            <Image url="@FlaticonRemoveIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="26.0" layoutX="69.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" rotate="-155.2" translateX="41.5" translateY="-46.0">
+         <image>
+            <Image url="@DelayKnobTr.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="30.0" fitWidth="26.0" layoutX="69.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" rotate="34.8" translateX="-40.0" translateY="-46.0">
+         <image>
+            <Image url="@DelayKnobTr.png" />
+         </image>
+      </ImageView>
+   </children>
+</fx:root>

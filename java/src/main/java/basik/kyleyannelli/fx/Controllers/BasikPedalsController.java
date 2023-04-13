@@ -3,6 +3,7 @@ package basik.kyleyannelli.fx.Controllers;
 import basik.kyleyannelli.Helpers.PedalLoader;
 import basik.kyleyannelli.Models.*;
 import basik.kyleyannelli.fx.Components.BasikChorusComponent;
+import basik.kyleyannelli.fx.Components.BasikDelayComponent;
 import basik.kyleyannelli.fx.Components.BasikDistortionComponent;
 import basik.kyleyannelli.fx.Components.BasikReverbComponent;
 import javafx.animation.Animation;
@@ -16,6 +17,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpClient;
@@ -35,7 +37,7 @@ public class BasikPedalsController implements Initializable {
     @FXML
     private HBox pedalHBox;
     @FXML
-    private Button closeButton, addButton, cancelButton, reverbButton, distortionButton, chorusButton;
+    private Button closeButton, addButton, cancelButton, reverbButton, distortionButton, chorusButton, delayButton;
     @FXML
     private ToggleButton removeToggleButton;
     private ArrayList<Pedal> pedals;
@@ -79,7 +81,9 @@ public class BasikPedalsController implements Initializable {
                     basikDistortionComponent.setRemove(doShowRemove);
                     pedalHBox.getChildren().add(basikDistortionComponent);
                 } else if(pedal.getClass() == Delay.class) {
-
+                    BasikDelayComponent basikDelayComponent = (BasikDelayComponent)pedal.viewize();
+                    basikDelayComponent.setRemove(doShowRemove);
+                    pedalHBox.getChildren().add(basikDelayComponent);
                 } else if(pedal.getClass() == NoiseGate.class) {
 
                 }
@@ -108,6 +112,11 @@ public class BasikPedalsController implements Initializable {
     }
 
     @FXML
+    private void addDelayPedal(ActionEvent event) throws IOException {
+        putEffectAPIRequest(5);
+    }
+
+    @FXML
     private void toggleRemoveFromButton(ActionEvent event) {
         if(doShowRemove) doShowRemove = false;
         else doShowRemove = true;
@@ -123,6 +132,8 @@ public class BasikPedalsController implements Initializable {
                 ((BasikChorusComponent) o).setRemove(doShowRemove);
             } else if(o.getClass().equals(BasikDistortionComponent.class)) {
                 ((BasikDistortionComponent) o).setRemove(doShowRemove);
+            } else if(o.getClass().equals(BasikDelayComponent.class)) {
+                ((BasikDelayComponent) o).setRemove(doShowRemove);
             }
         }
     }
@@ -149,6 +160,15 @@ public class BasikPedalsController implements Initializable {
         fullToggleButton(reverbButton, b);
         fullToggleButton(distortionButton, b);
         fullToggleButton(chorusButton, b);
+        fullToggleButton(delayButton, b);
+    }
+
+    @FXML
+    public void closeScene(ActionEvent event) {
+        // get a handle to the stage
+        Stage stage = (Stage) ((Button) event.getSource()).getScene().getWindow();
+        // do what you have to do
+        stage.close();
     }
 
     private void fullToggleButton(Button bu, boolean bo) {
