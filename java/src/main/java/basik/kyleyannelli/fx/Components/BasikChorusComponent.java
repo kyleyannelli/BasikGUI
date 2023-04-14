@@ -53,6 +53,20 @@ public class BasikChorusComponent extends StackPane implements Initializable {
                     throw new RuntimeException(e);
                 }
             });
+            depthKnobImage.setOnMouseClicked((MouseEvent event) -> {
+                try {
+                    new BasikParameterComponent(chorus.getName(), chorus.getDepth(), "Depth");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            rateKnobImage.setOnMouseClicked((MouseEvent event) -> {
+                try {
+                    new BasikParameterComponent(chorus.getName(), chorus.getRateHz(), "Rate");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
         });
     }
 
