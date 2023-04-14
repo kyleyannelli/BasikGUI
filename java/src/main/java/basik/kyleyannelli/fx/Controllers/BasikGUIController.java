@@ -67,7 +67,9 @@ public class BasikGUIController {
 
     @FXML
     void handleMouseMoved(MouseEvent event) {
-        rotateKnobBasedOnMouse((ImageView) event.getTarget(), event);
+        if(event.getTarget().getClass().equals(ImageView.class)) {
+            rotateKnobBasedOnMouse((ImageView) event.getTarget(), event);
+        }
     }
 
     @FXML

@@ -3,7 +3,6 @@ package basik.kyleyannelli.fx.Components;
 import basik.kyleyannelli.Helpers.BasikAPI;
 import basik.kyleyannelli.Models.Chorus;
 import basik.kyleyannelli.Models.Delay;
-import basik.kyleyannelli.fx.BasikParameterGUI;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
