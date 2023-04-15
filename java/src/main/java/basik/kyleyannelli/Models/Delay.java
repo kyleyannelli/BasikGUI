@@ -32,7 +32,11 @@ public class Delay extends Pedal {
     @Override
     public boolean equals(Object p) {
         if(p == this) return true;
-        if(p instanceof Delay) return ((Delay) p).getPositionInBoard() == getPositionInBoard();
+        if(p instanceof Delay)
+            return ((Delay) p).getPositionInBoard() == getPositionInBoard() &&
+                    ((Delay) p).mix == mix &&
+                    ((Delay) p).feedback == feedback &&
+                    ((Delay) p).delaySeconds == delaySeconds;
         return false;
     }
 

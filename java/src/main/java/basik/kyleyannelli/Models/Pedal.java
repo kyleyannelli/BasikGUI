@@ -10,6 +10,7 @@ public abstract class Pedal {
     // is the effect before the amplifier (pre-amp) or after (effects-loop)
     private boolean isPre;
     private boolean isOn;
+    private boolean isLastInChain = false;
 
     public Pedal(String name, int positionInBoard, boolean isPre, boolean isOn) {
         this.name = name;
@@ -30,6 +31,7 @@ public abstract class Pedal {
         this.positionInBoard = positionInBoard;
         this.isPre = true;
         this.isOn = true;
+        this.isLastInChain = false;
     }
 
     public String getName() {
@@ -95,4 +97,12 @@ public abstract class Pedal {
     public abstract void sendAPIUpdateSingleParameter(String paramName);
     public abstract void updateParameterFromStringName(String paramName, float paramValue);
     public static Pedal buildFromString(String s) {return null;};
+
+    public boolean isLastInChain() {
+        return isLastInChain;
+    }
+
+    public void setLastInChain(boolean isLastInChain) {
+        this.isLastInChain = isLastInChain;
+    }
 }

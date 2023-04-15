@@ -3,6 +3,7 @@ package basik.kyleyannelli.fx.Components;
 import basik.kyleyannelli.Helpers.BasikAPI;
 import basik.kyleyannelli.Models.Chorus;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -18,7 +19,7 @@ public class BasikChorusComponent extends StackPane implements Initializable {
     private Chorus chorus;
     private final float minKnobRotation = -150.0F, maxKnobRotation = 150.0F;
     @FXML
-    private ImageView xButtonImage;
+    private ImageView xButtonImage, moveLeftArrowImage, moveRightArrowImage;
     @FXML
     private ImageView mixKnobImage;
     @FXML
@@ -108,6 +109,50 @@ public class BasikChorusComponent extends StackPane implements Initializable {
         } else {
             xButtonImage.setDisable(true);
             xButtonImage.setVisible(false);
+        }
+    }
+
+    public void setArrows(boolean doShowArrows) {
+        if(doShowArrows) {
+            if(this.chorus.isLastInChain()) {
+                moveLeftArrowImage.setDisable(false);
+                moveLeftArrowImage.setVisible(true);
+            } else if(this.chorus.getPositionInBoard() == 0) {
+                moveRightArrowImage.setDisable(false);
+                moveRightArrowImage.setVisible(true);
+            } else {
+                moveLeftArrowImage.setDisable(false);
+                moveLeftArrowImage.setVisible(true);
+                moveRightArrowImage.setDisable(false);
+                moveRightArrowImage.setVisible(true);
+            }
+        } else {
+            moveLeftArrowImage.setDisable(true);
+            moveLeftArrowImage.setVisible(false);
+            moveRightArrowImage.setDisable(true);
+            moveRightArrowImage.setVisible(false);
+        }
+    }
+
+    @FXML
+    public void moveLeft(MouseEvent event) {
+        try {
+            this.chorus.sendAPIUpdate(this.chorus.getPositionInBoard() - 1);
+            ((ImageView)event.getSource()).setDisable(true);
+            ((StackPane)((ImageView)event.getSource()).getParent()).setVisible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void moveRight(MouseEvent event) {
+        try {
+            this.chorus.sendAPIUpdate(this.chorus.getPositionInBoard() + 1);
+            ((ImageView)event.getSource()).setDisable(true);
+            ((StackPane)((ImageView)event.getSource()).getParent()).setVisible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

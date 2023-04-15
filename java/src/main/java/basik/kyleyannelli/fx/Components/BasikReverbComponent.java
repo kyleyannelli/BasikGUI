@@ -18,7 +18,7 @@ public class BasikReverbComponent extends StackPane implements Initializable {
     private Reverb reverb;
     private final float minKnobRotation = -154.0F, maxKnobRotation = 154F;
     @FXML
-    private ImageView xButtonImage;
+    private ImageView xButtonImage, moveLeftArrowImage, moveRightArrowImage;
     @FXML
     private ImageView mixKnob;
     @FXML
@@ -106,6 +106,50 @@ public class BasikReverbComponent extends StackPane implements Initializable {
         } else {
             xButtonImage.setDisable(true);
             xButtonImage.setVisible(false);
+        }
+    }
+
+    public void setArrows(boolean doShowArrows) {
+        if(doShowArrows) {
+            if(this.reverb.isLastInChain()) {
+                moveLeftArrowImage.setDisable(false);
+                moveLeftArrowImage.setVisible(true);
+            } else if(this.reverb.getPositionInBoard() == 0) {
+                moveRightArrowImage.setDisable(false);
+                moveRightArrowImage.setVisible(true);
+            } else {
+                moveLeftArrowImage.setDisable(false);
+                moveLeftArrowImage.setVisible(true);
+                moveRightArrowImage.setDisable(false);
+                moveRightArrowImage.setVisible(true);
+            }
+        } else {
+            moveLeftArrowImage.setDisable(true);
+            moveLeftArrowImage.setVisible(false);
+            moveRightArrowImage.setDisable(true);
+            moveRightArrowImage.setVisible(false);
+        }
+    }
+
+    @FXML
+    public void moveLeft(MouseEvent event) {
+        try {
+            this.reverb.sendAPIUpdate(this.reverb.getPositionInBoard() - 1);
+            ((ImageView)event.getSource()).setDisable(true);
+            ((StackPane)((ImageView)event.getSource()).getParent()).setVisible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void moveRight(MouseEvent event) {
+        try {
+            this.reverb.sendAPIUpdate(this.reverb.getPositionInBoard() + 1);
+            ((ImageView)event.getSource()).setDisable(true);
+            ((StackPane)((ImageView)event.getSource()).getParent()).setVisible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

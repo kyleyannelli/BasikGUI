@@ -39,14 +39,15 @@ public class BasikPedalsController implements Initializable {
     @FXML
     private Button closeButton, addButton, cancelButton, reverbButton, distortionButton, chorusButton, delayButton;
     @FXML
-    private ToggleButton removeToggleButton;
+    private ToggleButton removeToggleButton, reorderToggleButton;
     private ArrayList<Pedal> pedals;
     private Timeline timeline;
     private boolean isAdding = false;
-    private boolean doShowRemove;
+    private boolean doShowRemove, doShowArrows;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         doShowRemove = false;
+        doShowArrows = false;
         Platform.runLater(() -> {
             timeline = new Timeline(new KeyFrame(Duration.seconds(0.65), e -> updatePedals()));
             timeline.setCycleCount(Animation.INDEFINITE);
@@ -71,18 +72,22 @@ public class BasikPedalsController implements Initializable {
                 if(pedal.getClass() == Reverb.class) {
                     BasikReverbComponent basikReverbComponent = (BasikReverbComponent)pedal.viewize();
                     basikReverbComponent.setRemove(doShowRemove);
+                    basikReverbComponent.setArrows(doShowArrows);
                     pedalHBox.getChildren().add(basikReverbComponent);
                 } else if(pedal.getClass() == Chorus.class) {
                     BasikChorusComponent basikChorusComponent = (BasikChorusComponent)pedal.viewize();
                     basikChorusComponent.setRemove(doShowRemove);
+                    basikChorusComponent.setArrows(doShowArrows);
                     pedalHBox.getChildren().add(basikChorusComponent);
                 } else if(pedal.getClass() == Distortion.class) {
                     BasikDistortionComponent basikDistortionComponent = (BasikDistortionComponent)pedal.viewize();
                     basikDistortionComponent.setRemove(doShowRemove);
+                    basikDistortionComponent.setArrows(doShowArrows);
                     pedalHBox.getChildren().add(basikDistortionComponent);
                 } else if(pedal.getClass() == Delay.class) {
                     BasikDelayComponent basikDelayComponent = (BasikDelayComponent)pedal.viewize();
                     basikDelayComponent.setRemove(doShowRemove);
+                    basikDelayComponent.setArrows(doShowArrows);
                     pedalHBox.getChildren().add(basikDelayComponent);
                 } else if(pedal.getClass() == NoiseGate.class) {
 
@@ -118,10 +123,16 @@ public class BasikPedalsController implements Initializable {
 
     @FXML
     private void toggleRemoveFromButton(ActionEvent event) {
-        if(doShowRemove) doShowRemove = false;
-        else doShowRemove = true;
         if(doShowRemove) {
-            pedalHBox.setPadding(new Insets(40,0,0,0));
+            doShowRemove = false;
+            reorderToggleButton.setDisable(false);
+        }
+        else {
+            doShowRemove = true;
+            reorderToggleButton.setDisable(true);
+        }
+        if(doShowRemove) {
+            pedalHBox.setPadding(new Insets(30,0,0,0));
         } else {
             pedalHBox.setPadding(new Insets(20,0,0,0));
         }
@@ -134,6 +145,34 @@ public class BasikPedalsController implements Initializable {
                 ((BasikDistortionComponent) o).setRemove(doShowRemove);
             } else if(o.getClass().equals(BasikDelayComponent.class)) {
                 ((BasikDelayComponent) o).setRemove(doShowRemove);
+            }
+        }
+    }
+
+    @FXML
+    private void toggleReorderButton(ActionEvent event) {
+        if(doShowArrows) {
+            doShowArrows = false;
+            removeToggleButton.setDisable(false);
+        }
+        else {
+            doShowArrows = true;
+            removeToggleButton.setDisable(true);
+        }
+        if(doShowArrows) {
+            pedalHBox.setPadding(new Insets(10,0,0,0));
+        } else {
+            pedalHBox.setPadding(new Insets(20,0,0,0));
+        }
+        for(Object o : pedalHBox.getChildren()) {
+            if(o.getClass().equals(BasikReverbComponent.class)) {
+                ((BasikReverbComponent) o).setArrows(doShowArrows);
+            } else if(o.getClass().equals(BasikChorusComponent.class)) {
+                ((BasikChorusComponent) o).setArrows(doShowArrows);
+            } else if(o.getClass().equals(BasikDistortionComponent.class)) {
+                ((BasikDistortionComponent) o).setArrows(doShowArrows);
+            } else if(o.getClass().equals(BasikDelayComponent.class)) {
+                ((BasikDelayComponent) o).setArrows(doShowArrows);
             }
         }
     }
