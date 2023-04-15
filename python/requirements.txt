@@ -3,3 +3,4 @@ fastapi==0.95.0
 pedalboard==0.7.2
 sounddevice==0.4.6
 starlette==0.26.1
+uvicorn==0.21.1
