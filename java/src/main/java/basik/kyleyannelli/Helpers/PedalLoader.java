@@ -29,6 +29,7 @@ public class PedalLoader {
                 pedalModels.add(Delay.buildFromString(pedal));
             }
         }
+        pedalModels.get(pedalModels.size()-1).setLastInChain(true);
         return pedalModels;
     }
 

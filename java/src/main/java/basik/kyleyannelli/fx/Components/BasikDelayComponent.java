@@ -18,7 +18,7 @@ public class BasikDelayComponent extends StackPane implements Initializable {
     private final double minKnobRotation = -155.2, maxKnobRotation = 155.2;
     private Delay delay;
     @FXML
-    private ImageView xButtonImage;
+    private ImageView xButtonImage, moveLeftArrowImage, moveRightArrowImage;
     @FXML
     private ImageView mixKnob;
     @FXML
@@ -83,10 +83,54 @@ public class BasikDelayComponent extends StackPane implements Initializable {
         }
     }
 
+    public void setArrows(boolean doShowArrows) {
+        if(doShowArrows) {
+            if(this.delay.isLastInChain()) {
+                moveLeftArrowImage.setDisable(false);
+                moveLeftArrowImage.setVisible(true);
+            } else if(this.delay.getPositionInBoard() == 0) {
+                moveRightArrowImage.setDisable(false);
+                moveRightArrowImage.setVisible(true);
+            } else {
+                moveLeftArrowImage.setDisable(false);
+                moveLeftArrowImage.setVisible(true);
+                moveRightArrowImage.setDisable(false);
+                moveRightArrowImage.setVisible(true);
+            }
+        } else {
+            moveLeftArrowImage.setDisable(true);
+            moveLeftArrowImage.setVisible(false);
+            moveRightArrowImage.setDisable(true);
+            moveRightArrowImage.setVisible(false);
+        }
+    }
+
     @FXML
     public void removeButtonImage(MouseEvent event) {
         try {
             BasikAPI.deletePedalRequest(this.delay.getPositionInBoard());
+            ((ImageView)event.getSource()).setDisable(true);
+            ((StackPane)((ImageView)event.getSource()).getParent()).setVisible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void moveLeft(MouseEvent event) {
+        try {
+            this.delay.sendAPIUpdate(this.delay.getPositionInBoard() - 1);
+            ((ImageView)event.getSource()).setDisable(true);
+            ((StackPane)((ImageView)event.getSource()).getParent()).setVisible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void moveRight(MouseEvent event) {
+        try {
+            this.delay.sendAPIUpdate(this.delay.getPositionInBoard() + 1);
             ((ImageView)event.getSource()).setDisable(true);
             ((StackPane)((ImageView)event.getSource()).getParent()).setVisible(false);
         } catch (Exception e) {

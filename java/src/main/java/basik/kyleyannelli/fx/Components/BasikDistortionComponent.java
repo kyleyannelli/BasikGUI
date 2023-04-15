@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
 public class BasikDistortionComponent extends StackPane implements Initializable {
     private final float minKnobRotation = -144.0F, maxKnobRotation = 144F;
     @FXML
-    private ImageView xButtonImage;
+    private ImageView xButtonImage, moveLeftArrowImage, moveRightArrowImage;;
     @FXML
     private ImageView toneKnobImage;
     @FXML
@@ -95,6 +95,50 @@ public class BasikDistortionComponent extends StackPane implements Initializable
             BasikAPI.deletePedalRequest(this.distortion.getPositionInBoard());
             ((ImageView)event.getSource()).setDisable(true);
             ((ImageView)event.getSource()).getParent().setVisible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void setArrows(boolean doShowArrows) {
+        if(doShowArrows) {
+            if(this.distortion.isLastInChain()) {
+                moveLeftArrowImage.setDisable(false);
+                moveLeftArrowImage.setVisible(true);
+            } else if(this.distortion.getPositionInBoard() == 0) {
+                moveRightArrowImage.setDisable(false);
+                moveRightArrowImage.setVisible(true);
+            } else {
+                moveLeftArrowImage.setDisable(false);
+                moveLeftArrowImage.setVisible(true);
+                moveRightArrowImage.setDisable(false);
+                moveRightArrowImage.setVisible(true);
+            }
+        } else {
+            moveLeftArrowImage.setDisable(true);
+            moveLeftArrowImage.setVisible(false);
+            moveRightArrowImage.setDisable(true);
+            moveRightArrowImage.setVisible(false);
+        }
+    }
+
+    @FXML
+    public void moveLeft(MouseEvent event) {
+        try {
+            this.distortion.sendAPIUpdate(this.distortion.getPositionInBoard() - 1);
+            ((ImageView)event.getSource()).setDisable(true);
+            ((StackPane)((ImageView)event.getSource()).getParent()).setVisible(false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    public void moveRight(MouseEvent event) {
+        try {
+            this.distortion.sendAPIUpdate(this.distortion.getPositionInBoard() + 1);
+            ((ImageView)event.getSource()).setDisable(true);
+            ((StackPane)((ImageView)event.getSource()).getParent()).setVisible(false);
         } catch (Exception e) {
             e.printStackTrace();
         }

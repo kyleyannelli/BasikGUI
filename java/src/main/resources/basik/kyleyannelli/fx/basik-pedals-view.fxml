@@ -24,6 +24,7 @@
             <Button fx:id="closeButton" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#closeScene" text="Close" />
             <Button fx:id="addButton" layoutX="85.0" layoutY="8.0" mnemonicParsing="false" onAction="#toggleButtonOptions" text="Add" />
             <ToggleButton fx:id="removeToggleButton" layoutX="147.0" layoutY="9.0" mnemonicParsing="false" onAction="#toggleRemoveFromButton" text="Remove" translateY="-1.0" />
+            <ToggleButton fx:id="reorderToggleButton" layoutX="231.0" layoutY="8.0" mnemonicParsing="false" onAction="#toggleReorderButton" text="Reorder" />
             <Button fx:id="cancelButton" disable="true" layoutX="14.0" layoutY="8.0" mnemonicParsing="false" onAction="#toggleButtonOptions" text="Cancel" visible="false" />
             <Button fx:id="reverbButton" disable="true" layoutX="79.0" layoutY="8.0" mnemonicParsing="false" onAction="#addReverbPedal" text="Reverb" visible="false" />
             <Button fx:id="distortionButton" disable="true" layoutX="147.0" layoutY="8.0" mnemonicParsing="false" onAction="#addDistortionPedal" text="Distortion" visible="false" />
