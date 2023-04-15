@@ -47,7 +47,7 @@ def start():
     selected_output_device: int = sync_get_data(output_url, -1)
 
     global cli_url
-    with AudioStream(buffer_size=4096, input_device_name=str(set_input_device(selected_input_device)),
+    with AudioStream(buffer_size=2048, input_device_name=str(set_input_device(selected_input_device)),
                      output_device_name=str(set_output_device(selected_output_device)), allow_feedback=True) as stream:
         handle_api_stream(stream)
 
@@ -218,55 +218,97 @@ def add_pedal_through_api(pedal_chain: Chain, effect_number: int, pre_amp: bool)
     chain_size += 1
 
 
-def parse_effect_from_dict(effect_number: int, parameters: dict):
+def parse_effect_from_dict(effect_number: int, parameters: dict, pedal: pedalboard.Plugin = None):
     added_effect = None
     if effect_number == 1:
         added_effect: pedalboard.Reverb = Reverb()
-        adjust_reverb(added_effect, parameters)
+        adjust_reverb(added_effect, parameters, pedal)
     elif effect_number == 2:
         added_effect: pedalboard.Distortion = Distortion()
-        adjust_distortion(added_effect, parameters)
+        adjust_distortion(added_effect, parameters, pedal)
     elif effect_number == 3:
         added_effect: pedalboard.Chorus = Chorus()
-        adjust_chorus(added_effect, parameters)
+        adjust_chorus(added_effect, parameters, pedal)
     elif effect_number == 5:
         added_effect: pedalboard.Delay = Delay()
-        adjust_delay(added_effect, parameters)
+        adjust_delay(added_effect, parameters, pedal)
     if added_effect is not None:
         return added_effect
 
 
-def adjust_delay(delay_pedal: pedalboard.Delay, parameters: dict):
-    if "mix" in parameters and \
-            "feedback" in parameters and \
-            "delay_seconds" in parameters:
+def adjust_delay(delay_pedal: pedalboard.Delay, parameters: dict, pedal: pedalboard.Delay = None):
+    if "mix" in parameters:
         delay_pedal.mix = float(parameters["mix"])
+        if pedal is not None:
+            delay_pedal.feedback = pedal.feedback
+            delay_pedal.delay_seconds = pedal.delay_seconds
+    if "feedback" in parameters:
         delay_pedal.feedback = float(parameters["feedback"])
+        if pedal is not None:
+            delay_pedal.mix = pedal.mix
+            delay_pedal.delay_seconds = pedal.delay_seconds
+    if "delay_seconds" in parameters:
         delay_pedal.delay_seconds = float(parameters["delay_seconds"])
+        if pedal is not None:
+            delay_pedal.feedback = pedal.feedback
+            delay_pedal.mix = pedal.mix
 
 
-def adjust_chorus(chorus_pedal: pedalboard.Chorus, parameters: dict):
-    if "mix" in parameters and \
-            "depth" in parameters and \
-            "rate_hz" in parameters:
+def adjust_chorus(chorus_pedal: pedalboard.Chorus, parameters: dict, pedal: pedalboard.Chorus = None):
+    if "mix" in parameters:
         chorus_pedal.mix = float(parameters["mix"])
+        if pedal is not None:
+            chorus_pedal.feedback = pedal.feedback
+            chorus_pedal.depth = pedal.depth
+            chorus_pedal.rate_hz = pedal.rate_hz
+    if "depth" in parameters:
         chorus_pedal.depth = float(parameters["depth"])
-        chorus_pedal.rate_hz = float(parameters["rate_hz"])
+        if pedal is not None:
+            chorus_pedal.feedback = pedal.feedback
+            chorus_pedal.mix = pedal.mix
+            chorus_pedal.rate_hz = pedal.rate_hz
+    if "rate_hz" in parameters:
+        rate_hz_normalized: float = float(parameters["rate_hz"])
+        if rate_hz_normalized < 0.8:
+            chorus_pedal.rate_hz = (rate_hz_normalized * 4)
+        elif rate_hz_normalized < 0.85:
+            chorus_pedal.rate_hz = rate_hz_normalized * 20
+        elif rate_hz_normalized < 0.9:
+            chorus_pedal.rate_hz = rate_hz_normalized * 40
+        elif rate_hz_normalized < 0.95:
+            chorus_pedal.rate_hz = rate_hz_normalized * 60
+        else:
+            chorus_pedal.rate_hz = rate_hz_normalized * 100
+        if pedal is not None:
+            chorus_pedal.feedback = pedal.feedback
+            chorus_pedal.depth = pedal.depth
+            chorus_pedal.mix = pedal.mix
 
 
-def adjust_distortion(distortion_pedal: pedalboard.Distortion, parameters: dict):
+def adjust_distortion(distortion_pedal: pedalboard.Distortion, parameters: dict, pedal: pedalboard.Distortion = None):
     if "drive_db" in parameters:
         distortion_pedal.drive_db = float(parameters["drive_db"])
 
 
-def adjust_reverb(reverb_pedal: pedalboard.Reverb, parameters: dict):
-    if "mix" in parameters and \
-            "damping" in parameters and \
-            "room_size" in parameters:
+def adjust_reverb(reverb_pedal: pedalboard.Reverb, parameters: dict, pedal: pedalboard.Reverb = None):
+    if "mix" in parameters:
         reverb_pedal.wet_level = float(parameters["mix"])
         reverb_pedal.dry_level = 1.0 - reverb_pedal.wet_level
+        if pedal is not None:
+            reverb_pedal.damping = pedal.damping
+            reverb_pedal.room_size = pedal.room_size
+    if "damping" in parameters:
         reverb_pedal.damping = float(parameters["damping"])
+        if pedal is not None:
+            reverb_pedal.wet_level = pedal.wet_level
+            reverb_pedal.dry_level = pedal.dry_level
+            reverb_pedal.room_size = pedal.room_size
+    if "room_size" in parameters:
         reverb_pedal.room_size = float(parameters["room_size"])
+        if pedal is not None:
+            reverb_pedal.wet_level = pedal.wet_level
+            reverb_pedal.dry_level = pedal.dry_level
+            reverb_pedal.damping = pedal.damping
 
 
 def get_dict_effect_from_api():
@@ -326,13 +368,25 @@ def adjust_effect_through_api(pedal_chain: Chain):
     pedal: pedalboard.Plugin = pedal_chain.__getitem__(current_pos)
     adjusted_pedal = None
     if type(pedal) == pedalboard.Reverb:
-        adjusted_pedal = parse_effect_from_dict(1, effect_info_from_api)
+        if "KEEP" in effect_info_from_api:
+            adjusted_pedal = parse_effect_from_dict(1, effect_info_from_api, pedal)
+        else:
+            adjusted_pedal = parse_effect_from_dict(1, effect_info_from_api)
     elif type(pedal) == pedalboard.Chorus:
-        adjusted_pedal = parse_effect_from_dict(3, effect_info_from_api)
+        if "KEEP" in effect_info_from_api:
+            adjusted_pedal = parse_effect_from_dict(3, effect_info_from_api, pedal)
+        else:
+            adjusted_pedal = parse_effect_from_dict(3, effect_info_from_api)
     elif type(pedal) == pedalboard.Distortion:
-        adjusted_pedal = parse_effect_from_dict(2, effect_info_from_api)
+        if "KEEP" in effect_info_from_api:
+            adjusted_pedal = parse_effect_from_dict(2, effect_info_from_api, pedal)
+        else:
+            adjusted_pedal = parse_effect_from_dict(2, effect_info_from_api)
     elif type(pedal) == pedalboard.Delay:
-        adjusted_pedal = parse_effect_from_dict(5, effect_info_from_api)
+        if "KEEP" in effect_info_from_api:
+            adjusted_pedal = parse_effect_from_dict(5, effect_info_from_api, pedal)
+        else:
+            adjusted_pedal = parse_effect_from_dict(5, effect_info_from_api)
     # if there wasn't a match for pedal type then stop
     if adjusted_pedal is None:
         return

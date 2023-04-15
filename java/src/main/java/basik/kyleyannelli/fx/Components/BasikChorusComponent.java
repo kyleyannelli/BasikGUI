@@ -6,11 +6,9 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -48,21 +46,21 @@ public class BasikChorusComponent extends StackPane implements Initializable {
         Platform.runLater(() -> {
             mixKnobImage.setOnMouseClicked((MouseEvent event) -> {
                 try {
-                    new BasikParameterComponent(chorus.getName(), chorus.getMix(), "Mix");
+                    new BasikParameterComponent(chorus.getName(), chorus.getMix(), "Mix").setPedal(this.chorus);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
             depthKnobImage.setOnMouseClicked((MouseEvent event) -> {
                 try {
-                    new BasikParameterComponent(chorus.getName(), chorus.getDepth(), "Depth");
+                    new BasikParameterComponent(chorus.getName(), chorus.getDepth(), "Depth").setPedal(this.chorus);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
             });
             rateKnobImage.setOnMouseClicked((MouseEvent event) -> {
                 try {
-                    new BasikParameterComponent(chorus.getName(), chorus.getRateHz(), "Rate");
+                    new BasikParameterComponent(chorus.getName(), chorus.getRateHz(), "Rate").setPedal(this.chorus);
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -76,7 +74,7 @@ public class BasikChorusComponent extends StackPane implements Initializable {
             knob.setRotate(maxKnobRotation * (normalizedValue));
         }
         else {
-            float normalizedValue = (value)/(0.5F);
+            float normalizedValue = (0.5F - value)/(0.5F);
             knob.setRotate(minKnobRotation * normalizedValue);
         }
     }

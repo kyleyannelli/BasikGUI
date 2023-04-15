@@ -21,7 +21,7 @@
             <Image url="@BigDistKnob.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="distKnobImage" fitHeight="41.0" fitWidth="42.0" layoutX="61.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" translateX="39.2" translateY="-66.5">
+      <ImageView fx:id="distKnobImage" fitHeight="41.0" fitWidth="42.0" layoutX="61.0" layoutY="108.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" translateX="39.2" translateY="-66.5">
          <image>
             <Image url="@BigDistKnob.png" />
          </image>

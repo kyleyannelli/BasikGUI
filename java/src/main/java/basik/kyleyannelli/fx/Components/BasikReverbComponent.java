@@ -2,6 +2,7 @@ package basik.kyleyannelli.fx.Components;
 
 import basik.kyleyannelli.Helpers.BasikAPI;
 import basik.kyleyannelli.Models.Reverb;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -42,7 +43,29 @@ public class BasikReverbComponent extends StackPane implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        Platform.runLater(() -> {
+            mixKnob.setOnMouseClicked((MouseEvent event) -> {
+                try {
+                    new BasikParameterComponent(reverb.getName(), reverb.getMix(), "Mix").setPedal(this.reverb);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            dampingKnob.setOnMouseClicked((MouseEvent event) -> {
+                try {
+                    new BasikParameterComponent(reverb.getName(), reverb.getDamping(), "Damping").setPedal(this.reverb);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+            sizeKnob.setOnMouseClicked((MouseEvent event) -> {
+                try {
+                    new BasikParameterComponent(reverb.getName(), reverb.getRoomSize(), "Size").setPedal(this.reverb);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            });
+        });
     }
 
     public void setKnob(ImageView knob, float value) {
@@ -51,7 +74,7 @@ public class BasikReverbComponent extends StackPane implements Initializable {
             knob.setRotate(maxKnobRotation * (normalizedValue));
         }
         else {
-            float normalizedValue = (value)/(0.5F);
+            float normalizedValue = (0.5F - value)/(0.5F);
             knob.setRotate(minKnobRotation * normalizedValue);
         }
     }

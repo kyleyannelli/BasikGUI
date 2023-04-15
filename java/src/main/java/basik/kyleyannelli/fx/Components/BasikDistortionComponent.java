@@ -41,7 +41,13 @@ public class BasikDistortionComponent extends StackPane implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        distKnobImage.setOnMouseClicked((MouseEvent event) -> {
+            try {
+                new BasikParameterComponent(distortion.getName(), distortion.getGainPercent(), "Gain").setPedal(this.distortion);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     public void setKnob(ImageView knob, float value) {
@@ -50,8 +56,8 @@ public class BasikDistortionComponent extends StackPane implements Initializable
             knob.setRotate(maxKnobRotation * (normalizedValue));
         }
         else {
-            float normalizedValue = (value)/(0.5F);
-            knob.setRotate(minKnobRotation * normalizedValue);
+            float normalizedValue = (0.5F - value)/(0.5F);
+            knob.setRotate((minKnobRotation * normalizedValue));
         }
     }
 
@@ -88,7 +94,7 @@ public class BasikDistortionComponent extends StackPane implements Initializable
         try {
             BasikAPI.deletePedalRequest(this.distortion.getPositionInBoard());
             ((ImageView)event.getSource()).setDisable(true);
-            ((StackPane)((ImageView)event.getSource()).getParent()).setVisible(false);
+            ((ImageView)event.getSource()).getParent().setVisible(false);
         } catch (Exception e) {
             e.printStackTrace();
         }

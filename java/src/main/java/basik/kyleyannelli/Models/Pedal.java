@@ -91,5 +91,8 @@ public abstract class Pedal {
     public abstract Object viewize();
     @Override
     public abstract boolean equals(Object p);
+    public abstract void sendAPIUpdate(int newPosition);
+    public abstract void sendAPIUpdateSingleParameter(String paramName);
+    public abstract void updateParameterFromStringName(String paramName, float paramValue);
     public static Pedal buildFromString(String s) {return null;};
 }

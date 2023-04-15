@@ -11,7 +11,7 @@
             <Image url="@DelayPedal.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="30.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" style="-fx-cursor: hand;" translateX="0.5" translateY="-46.0">
+      <ImageView fx:id="feedbackKnob" fitHeight="30.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" style="-fx-cursor: hand;" translateX="0.5" translateY="-46.0">
          <image>
             <Image url="@DelayKnobTr.png" />
          </image>
@@ -21,12 +21,12 @@
             <Image url="@FlaticonRemoveIcon.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="30.0" fitWidth="26.0" layoutX="69.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" rotate="-155.2" style="-fx-cursor: hand;" translateX="41.5" translateY="-46.0">
+      <ImageView fx:id="timeKnob" fitHeight="30.0" fitWidth="26.0" layoutX="69.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" rotate="-155.2" style="-fx-cursor: hand;" translateX="41.5" translateY="-46.0">
          <image>
             <Image url="@DelayKnobTr.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="30.0" fitWidth="26.0" layoutX="69.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" rotate="34.8" style="-fx-cursor: hand;" translateX="-40.0" translateY="-46.0">
+      <ImageView fx:id="mixKnob" fitHeight="30.0" fitWidth="26.0" layoutX="69.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" rotate="34.8" style="-fx-cursor: hand;" translateX="-40.0" translateY="-46.0">
          <image>
             <Image url="@DelayKnobTr.png" />
          </image>

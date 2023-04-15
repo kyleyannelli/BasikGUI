@@ -27,5 +27,18 @@ public class NoiseGate extends Pedal {
         return null;
     }
 
+    @Override
+    public void sendAPIUpdate(int newPosition) {
 
+    }
+
+    @Override
+    public void sendAPIUpdateSingleParameter(String paramName) {
+
+    }
+
+    @Override
+    public void updateParameterFromStringName(String paramName, float paramValue) {
+
+    }
 }

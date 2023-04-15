@@ -16,17 +16,17 @@
             <Image url="@ReverbKnob.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="dampingKnob" fitHeight="49.0" fitWidth="30.0" layoutX="67.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" translateX="-16.8" translateY="-50.0">
+      <ImageView fx:id="dampingKnob" fitHeight="49.0" fitWidth="30.0" layoutX="67.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" style="-fx-cursor: hand;" translateX="-16.8" translateY="-50.0">
          <image>
             <Image url="@ReverbKnob.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="sizeKnob" fitHeight="49.0" fitWidth="30.0" layoutX="67.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" translateX="17.1" translateY="-50.0">
+      <ImageView fx:id="sizeKnob" fitHeight="49.0" fitWidth="30.0" layoutX="67.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" style="-fx-cursor: hand;" translateX="17.1" translateY="-50.0">
          <image>
             <Image url="@ReverbKnob.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="mixKnob" fitHeight="49.0" fitWidth="30.0" layoutX="67.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" translateX="49.5" translateY="-50.0">
+      <ImageView fx:id="mixKnob" fitHeight="49.0" fitWidth="30.0" layoutX="67.0" layoutY="113.0" pickOnBounds="true" preserveRatio="true" rotate="-154.0" style="-fx-cursor: hand;" translateX="49.5" translateY="-50.0">
          <image>
             <Image url="@ReverbKnob.png" />
          </image>

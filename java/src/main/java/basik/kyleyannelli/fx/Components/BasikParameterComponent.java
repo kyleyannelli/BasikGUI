@@ -1,10 +1,10 @@
 package basik.kyleyannelli.fx.Components;
 
+import basik.kyleyannelli.Models.*;
 import com.gluonhq.charm.glisten.control.ProgressBar;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,9 +19,13 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.Instant;
 import java.util.ResourceBundle;
 
 public class BasikParameterComponent extends AnchorPane implements Initializable {
+    private Pedal pedal;
+    private final long minimumUpdateTimeMs = 500;
+    private long lastParameterUpdateMs;
     private Robot robot;
     private Timeline timeline;
     private final int height = 400;
@@ -47,6 +51,11 @@ public class BasikParameterComponent extends AnchorPane implements Initializable
         stage.setScene(scene);
         stage.show();
     }
+
+    public void setPedal(Pedal pedal) {
+        this.pedal = pedal;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         robot = new Robot();
@@ -68,6 +77,7 @@ public class BasikParameterComponent extends AnchorPane implements Initializable
             }
             progressBar.setProgress(progress);
             this.percentageText.setText((int)(progress*100) + "%");
+            updateParameter();
         }
     }
 
@@ -90,5 +100,13 @@ public class BasikParameterComponent extends AnchorPane implements Initializable
 
     public void setParameterNameText(String text) {
         parameterNameText.setText(text);
+    }
+
+    private void updateParameter() {
+        if(Instant.now().toEpochMilli() - lastParameterUpdateMs > minimumUpdateTimeMs) {
+            pedal.updateParameterFromStringName(parameterNameText.getText(), (float) progressBar.getProgress());
+            pedal.sendAPIUpdateSingleParameter(parameterNameText.getText());
+            lastParameterUpdateMs = Instant.now().toEpochMilli();
+        }
     }
 }

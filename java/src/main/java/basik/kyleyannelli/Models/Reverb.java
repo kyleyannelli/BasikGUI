@@ -1,9 +1,9 @@
 package basik.kyleyannelli.Models;
 
+import basik.kyleyannelli.Helpers.BasikAPI;
 import basik.kyleyannelli.fx.Components.BasikReverbComponent;
 
 import java.util.HashMap;
-import java.util.regex.Pattern;
 
 public class Reverb extends Pedal {
     /**
@@ -71,6 +71,50 @@ public class Reverb extends Pedal {
                     ((Reverb) p).getPositionInBoard() == getPositionInBoard();
         }
         return false;
+    }
+
+    @Override
+    public void sendAPIUpdate(int newPosition) {
+        String updateString = "mix:" + mix + ",room_size:" + roomSize + ",damping:" + damping;
+        try {
+            BasikAPI.patchPedalRequest(getPositionInBoard(), newPosition, updateString);
+        } catch(Exception e) {
+            System.out.println("FAILED TO UPDATE PEDAL...");
+            e.printStackTrace();
+            System.out.println("...FAILED TO UPDATE PEDAL");
+        }
+    }
+
+    @Override
+    public void sendAPIUpdateSingleParameter(String paramName) {
+        String updateString = "KEEP:YES,";
+        if(paramName.equalsIgnoreCase("mix")) {
+            updateString += "mix:" + mix;
+        } else if(paramName.equalsIgnoreCase("size")) {
+            updateString += "room_size:" + roomSize;
+        } else if(paramName.equalsIgnoreCase("damping")) {
+            updateString += "damping:" + damping;
+        }
+        try {
+            BasikAPI.patchPedalRequest(getPositionInBoard(), getPositionInBoard(), updateString);
+        } catch(Exception e) {
+            System.out.println("FAILED TO UPDATE PEDAL...");
+            e.printStackTrace();
+            System.out.println("...FAILED TO UPDATE PEDAL");
+        }
+    }
+
+    @Override
+    public void updateParameterFromStringName(String paramName, float paramValue) {
+        if(paramName.equalsIgnoreCase("mix")) {
+            setMix(paramValue);
+        } else if(paramName.equalsIgnoreCase("size")) {
+            setRoomSize(paramValue);
+        } else if(paramName.equalsIgnoreCase("damping")) {
+            setDamping(paramValue);
+        } else {
+            throw new RuntimeException("Parameter Name: " + paramName + " is not valid for pedal " + this.getName());
+        }
     }
 
     public static Reverb buildFromString(String s) {

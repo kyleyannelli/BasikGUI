@@ -1,7 +1,7 @@
 package basik.kyleyannelli.Models;
 
+import basik.kyleyannelli.Helpers.BasikAPI;
 import basik.kyleyannelli.fx.Components.BasikChorusComponent;
-import basik.kyleyannelli.fx.Components.BasikDistortionComponent;
 
 import java.util.HashMap;
 
@@ -54,7 +54,7 @@ public class Chorus extends Pedal {
         BasikChorusComponent chorusComponent = new BasikChorusComponent();
         chorusComponent.setKnob(chorusComponent.getDepthKnobImage(), depth);
         chorusComponent.setKnob(chorusComponent.getMixKnobImage(), mix);
-        float rateHzNormalized = (rateHz - 100F)/(15000F - 100F);
+        float rateHzNormalized = (rateHz)/(100F);
         chorusComponent.setKnob(chorusComponent.getRateKnobImage(), rateHzNormalized/15000F);
         chorusComponent.setChorus(this);
         return chorusComponent;
@@ -65,7 +65,7 @@ public class Chorus extends Pedal {
         Chorus chorus = new Chorus(Integer.parseInt(hashedValues.get("position")));
         chorus.depth = Float.parseFloat(hashedValues.get("depth"));
         chorus.mix = Float.parseFloat(hashedValues.get("mix"));
-        chorus.rateHz = Float.parseFloat(hashedValues.get("rate_hz"));
+        chorus.rateHz = (Float.parseFloat(hashedValues.get("rate_hz")))/100F;
         return chorus;
     }
 
@@ -79,5 +79,49 @@ public class Chorus extends Pedal {
                     ((Chorus) p).getPositionInBoard() == getPositionInBoard();
         }
         return false;
+    }
+
+    @Override
+    public void sendAPIUpdate(int newPosition) {
+        String updateString = "mix:" + mix + ",depth:" + depth + ",rate_hz:" + rateHz;
+        try {
+            BasikAPI.patchPedalRequest(getPositionInBoard(), newPosition, updateString);
+        } catch(Exception e) {
+            System.out.println("FAILED TO UPDATE PEDAL...");
+            e.printStackTrace();
+            System.out.println("...FAILED TO UPDATE PEDAL");
+        }
+    }
+
+    @Override
+    public void sendAPIUpdateSingleParameter(String paramName) {
+        String updateString = "KEEP:YES,";
+        if(paramName.equalsIgnoreCase("mix")) {
+            updateString += "mix:" + mix;
+        } else if(paramName.equalsIgnoreCase("depth")) {
+            updateString += "depth:" + depth;
+        } else if(paramName.equalsIgnoreCase("rate")) {
+            updateString += "rate_hz:" + rateHz;
+        }
+        try {
+            BasikAPI.patchPedalRequest(getPositionInBoard(), getPositionInBoard(), updateString);
+        } catch(Exception e) {
+            System.out.println("FAILED TO UPDATE PEDAL...");
+            e.printStackTrace();
+            System.out.println("...FAILED TO UPDATE PEDAL");
+        }
+    }
+
+    @Override
+    public void updateParameterFromStringName(String paramName, float paramValue) {
+        if(paramName.equalsIgnoreCase("mix")) {
+            setMix(paramValue);
+        } else if(paramName.equalsIgnoreCase("depth")) {
+            setDepth(paramValue);
+        } else if(paramName.equalsIgnoreCase("rate")) {
+            setRateHz(paramValue);
+        } else {
+            throw new RuntimeException("Parameter Name: " + paramName + " is not valid for pedal " + this.getName());
+        }
     }
 }
