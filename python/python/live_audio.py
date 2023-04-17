@@ -47,7 +47,7 @@ def start():
     selected_output_device: int = sync_get_data(output_url, -1)
 
     global cli_url
-    with AudioStream(buffer_size=2048, input_device_name=str(set_input_device(selected_input_device)),
+    with AudioStream(buffer_size=1024, input_device_name=str(set_input_device(selected_input_device)),
                      output_device_name=str(set_output_device(selected_output_device)), allow_feedback=True) as stream:
         handle_api_stream(stream)
 
