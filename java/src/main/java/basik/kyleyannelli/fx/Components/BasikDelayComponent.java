@@ -85,7 +85,12 @@ public class BasikDelayComponent extends StackPane implements Initializable {
 
     public void setArrows(boolean doShowArrows) {
         if(doShowArrows) {
-            if(this.delay.isLastInChain()) {
+            if(this.delay.isOnlyPedal()) {
+                moveLeftArrowImage.setDisable(true);
+                moveLeftArrowImage.setVisible(false);
+                moveRightArrowImage.setDisable(true);
+                moveRightArrowImage.setVisible(false);
+            } else if(this.delay.isLastInChain()) {
                 moveLeftArrowImage.setDisable(false);
                 moveLeftArrowImage.setVisible(true);
             } else if(this.delay.getPositionInBoard() == 0) {

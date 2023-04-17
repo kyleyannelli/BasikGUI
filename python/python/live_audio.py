@@ -22,7 +22,7 @@ effect_url = url + "/effect"
 pedalboard_url = url + "/pedalboard"
 remove_pos_url = url + "/remove-pos"
 
-distortion_amp = [Compressor(ratio=1000), Gain(gain_db=20), Clipping(threshold_db=-10), HighpassFilter(cutoff_frequency_hz=250),
+distortion_amp = [Compressor(), Gain(gain_db=20), Clipping(threshold_db=-10), HighpassFilter(cutoff_frequency_hz=250),
                   Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(gain_db=20), Gain(gain_db=-15), Distortion(drive_db=15.1),
                   Gain(gain_db=20), Gain(gain_db=-15),
                   Distortion(drive_db=15.1), Gain(gain_db=-10), Gain(gain_db=20), Gain(gain_db=-15)]
@@ -47,7 +47,7 @@ def start():
     selected_output_device: int = sync_get_data(output_url, -1)
 
     global cli_url
-    with AudioStream(buffer_size=2048, input_device_name=str(set_input_device(selected_input_device)),
+    with AudioStream(buffer_size=1024, input_device_name=str(set_input_device(selected_input_device)),
                      output_device_name=str(set_output_device(selected_output_device)), allow_feedback=True) as stream:
         handle_api_stream(stream)
 
