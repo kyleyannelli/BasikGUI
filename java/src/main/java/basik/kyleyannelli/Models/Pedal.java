@@ -105,4 +105,8 @@ public abstract class Pedal {
     public void setLastInChain(boolean isLastInChain) {
         this.isLastInChain = isLastInChain;
     }
+
+    public boolean isOnlyPedal() {
+        return positionInBoard == 0 && isLastInChain;
+    }
 }

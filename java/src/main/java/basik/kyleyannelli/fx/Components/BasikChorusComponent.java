@@ -114,7 +114,12 @@ public class BasikChorusComponent extends StackPane implements Initializable {
 
     public void setArrows(boolean doShowArrows) {
         if(doShowArrows) {
-            if(this.chorus.isLastInChain()) {
+            if(this.chorus.isOnlyPedal()) {
+                moveLeftArrowImage.setDisable(true);
+                moveLeftArrowImage.setVisible(false);
+                moveRightArrowImage.setDisable(true);
+                moveRightArrowImage.setVisible(false);
+            } else if(this.chorus.isLastInChain()) {
                 moveLeftArrowImage.setDisable(false);
                 moveLeftArrowImage.setVisible(true);
             } else if(this.chorus.getPositionInBoard() == 0) {

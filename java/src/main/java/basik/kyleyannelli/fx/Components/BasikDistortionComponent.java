@@ -102,7 +102,12 @@ public class BasikDistortionComponent extends StackPane implements Initializable
 
     public void setArrows(boolean doShowArrows) {
         if(doShowArrows) {
-            if(this.distortion.isLastInChain()) {
+            if(this.distortion.isOnlyPedal()) {
+                moveLeftArrowImage.setDisable(true);
+                moveLeftArrowImage.setVisible(false);
+                moveRightArrowImage.setDisable(true);
+                moveRightArrowImage.setVisible(false);
+            } else if(this.distortion.isLastInChain()) {
                 moveLeftArrowImage.setDisable(false);
                 moveLeftArrowImage.setVisible(true);
             } else if(this.distortion.getPositionInBoard() == 0) {
