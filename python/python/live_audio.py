@@ -22,7 +22,7 @@ effect_url = url + "/effect"
 pedalboard_url = url + "/pedalboard"
 remove_pos_url = url + "/remove-pos"
 
-distortion_amp = [Compressor(ratio=1000), Gain(gain_db=20), Clipping(threshold_db=-10), HighpassFilter(cutoff_frequency_hz=250),
+distortion_amp = [Compressor(), Gain(gain_db=20), Clipping(threshold_db=-10), HighpassFilter(cutoff_frequency_hz=250),
                   Gain(gain_db=-15), Distortion(drive_db=15.1), Gain(gain_db=20), Gain(gain_db=-15), Distortion(drive_db=15.1),
                   Gain(gain_db=20), Gain(gain_db=-15),
                   Distortion(drive_db=15.1), Gain(gain_db=-10), Gain(gain_db=20), Gain(gain_db=-15)]
