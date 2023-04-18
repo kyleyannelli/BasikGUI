@@ -51,5 +51,10 @@
             <Image url="@LeftArrow.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="questionMarkImage" fitHeight="36.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.15;" translateY="-130.0">
+         <image>
+            <Image url="@../QuestionMark.png" />
+         </image>
+      </ImageView>
    </children>
 </fx:root>

@@ -2,6 +2,7 @@ package basik.kyleyannelli.fx.Components;
 
 import basik.kyleyannelli.Helpers.BasikAPI;
 import basik.kyleyannelli.Models.Delay;
+import basik.kyleyannelli.fx.BasikWebComponentGUI;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,7 +19,7 @@ public class BasikDelayComponent extends StackPane implements Initializable {
     private final double minKnobRotation = -155.2, maxKnobRotation = 155.2;
     private Delay delay;
     @FXML
-    private ImageView xButtonImage, moveLeftArrowImage, moveRightArrowImage;
+    private ImageView xButtonImage, moveLeftArrowImage, moveRightArrowImage, questionMarkImage;
     @FXML
     private ImageView mixKnob;
     @FXML
@@ -41,6 +42,13 @@ public class BasikDelayComponent extends StackPane implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Platform.runLater(() -> {
+            questionMarkImage.setOnMousePressed((MouseEvent event) -> {
+                try {
+                    new BasikWebComponentGUI("https://basik.kyle.city/pedals-songs/" + this.delay.getName());
+                } catch (Exception e) {
+
+                }
+            });
             mixKnob.setOnMouseClicked((MouseEvent event) -> {
                 try {
                     new BasikParameterComponent(delay.getName(), delay.getMix(), "Mix").setPedal(this.delay);

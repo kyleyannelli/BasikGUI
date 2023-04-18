@@ -31,6 +31,11 @@
             <Image url="@ChorusKnobTr.png" />
          </image>
       </ImageView>
+      <ImageView fx:id="questionMarkImage" fitHeight="36.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.15;" translateY="-130.0">
+         <image>
+            <Image url="@../QuestionMark.png" />
+         </image>
+      </ImageView>
       <ImageView disable="true" fitHeight="33.0" fitWidth="30.0" onMouseClicked="#removeButtonImage" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;" translateY="-129.5" visible="false" fx:id="xButtonImage">
          <image>
             <Image url="@FlaticonRemoveIcon.png" />

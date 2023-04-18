@@ -2,6 +2,7 @@ package basik.kyleyannelli.fx.Components;
 
 import basik.kyleyannelli.Helpers.BasikAPI;
 import basik.kyleyannelli.Models.Distortion;
+import basik.kyleyannelli.fx.BasikWebComponentGUI;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -16,7 +17,7 @@ import java.util.ResourceBundle;
 public class BasikDistortionComponent extends StackPane implements Initializable {
     private final float minKnobRotation = -144.0F, maxKnobRotation = 144F;
     @FXML
-    private ImageView xButtonImage, moveLeftArrowImage, moveRightArrowImage;;
+    private ImageView xButtonImage, moveLeftArrowImage, moveRightArrowImage, questionMarkImage;
     @FXML
     private ImageView toneKnobImage;
     @FXML
@@ -41,6 +42,13 @@ public class BasikDistortionComponent extends StackPane implements Initializable
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        questionMarkImage.setOnMousePressed((MouseEvent event) -> {
+            try {
+                new BasikWebComponentGUI("https://basik.kyle.city/pedals-songs/" + this.distortion.getName());
+            } catch (Exception e) {
+
+            }
+        });
         distKnobImage.setOnMouseClicked((MouseEvent event) -> {
             try {
                 new BasikParameterComponent(distortion.getName(), distortion.getGainPercent(), "Gain").setPedal(this.distortion);

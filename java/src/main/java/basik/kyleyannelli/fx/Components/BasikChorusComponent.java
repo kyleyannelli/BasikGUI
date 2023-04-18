@@ -2,6 +2,7 @@ package basik.kyleyannelli.fx.Components;
 
 import basik.kyleyannelli.Helpers.BasikAPI;
 import basik.kyleyannelli.Models.Chorus;
+import basik.kyleyannelli.fx.BasikWebComponentGUI;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,7 +20,7 @@ public class BasikChorusComponent extends StackPane implements Initializable {
     private Chorus chorus;
     private final float minKnobRotation = -150.0F, maxKnobRotation = 150.0F;
     @FXML
-    private ImageView xButtonImage, moveLeftArrowImage, moveRightArrowImage;
+    private ImageView xButtonImage, moveLeftArrowImage, moveRightArrowImage, questionMarkImage;
     @FXML
     private ImageView mixKnobImage;
     @FXML
@@ -45,6 +46,13 @@ public class BasikChorusComponent extends StackPane implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Platform.runLater(() -> {
+            questionMarkImage.setOnMousePressed((MouseEvent event) -> {
+                try {
+                    new BasikWebComponentGUI("https://basik.kyle.city/pedals-songs/" + this.chorus.getName());
+                } catch (Exception e) {
+
+                }
+            });
             mixKnobImage.setOnMouseClicked((MouseEvent event) -> {
                 try {
                     new BasikParameterComponent(chorus.getName(), chorus.getMix(), "Mix").setPedal(this.chorus);
